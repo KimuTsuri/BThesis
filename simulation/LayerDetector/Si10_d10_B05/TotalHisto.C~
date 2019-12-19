@@ -1,0 +1,13 @@
+{
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(kFALSE);
+
+  TFile f("electron
+.root");
+
+  TCanvas* c1;
+  TTree* tr1 = (TTree*)f.Get("B4");
+
+  tr1->Draw("Eabs");
+}

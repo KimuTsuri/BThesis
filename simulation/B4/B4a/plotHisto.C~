@@ -1,0 +1,25 @@
+{
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(kFALSE);
+
+  TFile f("B4.root");
+
+  TCanvas* c1 = new TCanvas("c1", "", 20, 20, 800, 600);
+  
+  TH1D* hist1 = (TH1D*)f.Get("Eabs");
+  hist1->Draw("HIST");
+  hist1->SetXTitle("MeV");
+  hist1->SetYTitle("Counts");
+  
+  //hist1->GetXaxix()->GetXmin(0.0);
+  //hist1->GetXaxis()->GetXmax(3.0);
+  //hist1->GetYaxix()->GetYmin();
+  //hist1->GetYaxis()->GetYmax();
+
+  hist1->GetXaxis()->SetTitleSize(0.04);
+  hist1->GetYaxis()->SetTitleSize(0.04);
+  hist1->GetXaxis()->SetLabelSize(0.04);
+  hist1->GetYaxis()->SetLabelSize(0.04);
+  
+}

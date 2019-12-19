@@ -1,0 +1,37 @@
+{
+  gROOT->Reset();
+  gStyle->SetOptStat(kFALSE);
+
+  
+  TFile* tf_No = new TFile("No.root");
+  TTree* tr_No = (TTree*)tf_No->Get("B4");
+  int Event_No = tr_No->GetEntries();
+  int N_No=0;
+  double Eabs_No;
+  tr_No->SetBranchAddress("Eabs",&Eabs_No);
+  for(int n=0; n<Event_No; n++)
+    {
+      tr_No->GetEntry(n);
+      if( 1.25<Eabs_No && Eabs_No<=1.75 ) N_No++;
+    }
+  double Eff_No = (double) N_No / Event_No;
+
+  
+  TFile* tf_Al = new TFile("Al.root");
+  TTree* tr_Al = (TTree*)tf_Al->Get("B4");
+  int Event_Al = tr_Al->GetEntries();
+  int N_Al=0;
+  double Eabs_Al;
+  tr_Al->SetBranchAddress("Eabs",&Eabs_Al);
+  for(int n=0; n<Event_Al; n++)
+    {
+      tr_Al->GetEntry(n);
+      if( 1.25<Eabs_Al && Eabs_Al<=1.75 ) N_Al++;
+    }
+  double Eff_Al = (double) N_Al / Event_Al;
+  cout << N_No << endl;
+  cout << N_Al << endl;
+  
+  cout << "Al薄膜なし " << Eff_No <<endl;
+  cout << "Al薄膜あり " << Eff_Al <<endl;
+}

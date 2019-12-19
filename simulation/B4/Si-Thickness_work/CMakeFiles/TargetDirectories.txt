@@ -1,0 +1,7 @@
+/nfs/space1/ktsuri/univ2018/MyGeant4/B4/Si-Thickness_work/CMakeFiles/install/strip.dir
+/nfs/space1/ktsuri/univ2018/MyGeant4/B4/Si-Thickness_work/CMakeFiles/install/local.dir
+/nfs/space1/ktsuri/univ2018/MyGeant4/B4/Si-Thickness_work/CMakeFiles/install.dir
+/nfs/space1/ktsuri/univ2018/MyGeant4/B4/Si-Thickness_work/CMakeFiles/list_install_components.dir
+/nfs/space1/ktsuri/univ2018/MyGeant4/B4/Si-Thickness_work/CMakeFiles/edit_cache.dir
+/nfs/space1/ktsuri/univ2018/MyGeant4/B4/Si-Thickness_work/CMakeFiles/rebuild_cache.dir
+/nfs/space1/ktsuri/univ2018/MyGeant4/B4/Si-Thickness_work/CMakeFiles/exampleB4c.dir

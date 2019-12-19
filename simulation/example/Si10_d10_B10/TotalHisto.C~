@@ -1,0 +1,28 @@
+{
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(kFALSE);
+  gStyle->SetOptLogy(1);
+
+  TCanvas* c1 = new TCanvas("c1", "", 20, 20, 1300, 600);
+  c1->Divide(2,1);
+  
+  TFile* e = new TFile("electron.root");
+  TTree* te = (TTree*)e->Get("B4");
+
+  TH1D *he = new TH1D("he1","Histogram of Electron;Total Energy Deposit / MeV;Counts", 100, 0.01, 3.0);
+  //  he->SetTitle("Histogram of Electron;Total Energy Deposit / MeV;Counts;");
+  
+  c1->cd(1);
+  te->Draw("Eabs");
+
+  TFile* g = new TFile("gamma.root");
+  TTree* tg = (TTree*)g->Get("B4");
+
+  TH1D *hg = new TH1D("hg1","", 100, 0.01, 3.0);
+  hg->SetTitle("Histogram of Gamma;Total Energy Deposit / MeV;Counts;");
+  
+  c1->cd(2);
+  tg->Draw("Eabs>>hg");
+  
+}

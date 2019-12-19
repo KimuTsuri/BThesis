@@ -1,0 +1,115 @@
+{
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(kFALSE);
+
+  TFile f("electron.root");
+
+  int M080 = 0;
+  int M085 = 0;
+  int M090 = 0;
+  int M095 = 0;
+  int N080 = 0;
+  int N085 = 0;
+  int N090 = 0;
+  int N095 = 0;
+  int event = B4->GetEntries();
+  int Event = event;
+  int Layer = 100;
+  double E[100];
+ 
+  for(int i=0; i<Event; i++)
+    {
+      B4->GetEntry(i);
+      stringstream ss;
+      for(int n=0;n<Layer;n++)
+	{
+	  ss.str("");
+	  ss.clear(stringstream::goodbit);
+	  ss<<n;
+	  string name = "Eabs" + ss.str();
+	  B4->SetBranchAddress(name.c_str(),&E[n]);
+	}
+      
+
+      double Etot = E[0];
+      int x[2];
+      int y[2] = 0;
+      x[0] = E[0];
+      x[1] = E[1];
+
+      for(int n=1; n<Layer; n++)
+	{
+	  Etot += E[n];
+	  if(x[0]<E[n])
+	    {
+	      x[1] = x[0];
+	      x[0] = E[n];
+	      y[1] = y[0];
+	      y[0] = n;
+	    }
+	  else if(x[1]<E[n])
+	    {
+	      x[1] = E[n];
+	      y[1] = n;
+	    }
+	}
+
+      cout << ">-----------------" <<endl;
+      cout << "> Event" << i <<endl;
+      cout << "Layer of E1 " << y[0] <<endl;
+      cout << "Layer of E2 " << y[1] <<endl;
+      cout << E[y[0]] << ":" << E[y[1]] <<endl;
+
+      double Ratio1;
+      double Ratio12;
+      double E12;
+      int nEvent;
+      int n12Event;
+      
+      if( 1.25<E[y[0]] && E[y[0]]<=1.75 && y[0] != y[1] )
+	{
+	  nEvent++;
+	  	  
+	  Ratio1 = E[y[0]]/Etot;
+	  if( Ratio1 > 0.80 ) M080++;
+	  if( Ratio1 > 0.85 ) M085++;
+	  if( Ratio1 > 0.90 ) M090++;
+	  if( Ratio1 > 0.95 ) M095++;
+
+	  if(((y[0]-y[1])==1)||((y[0]-y[1])==-1))
+	    {
+	      n12Event++;
+	      E12 = E[y[0]]+E[y[1]];
+
+	      Ratio12 = E12/Etot;
+	      if( Ratio12 > 0.80 ) N080++;
+	      if( Ratio12 > 0.85 ) N085++;
+	      if( Ratio12 > 0.90 ) N090++;
+	      if( Ratio12 > 0.95 ) N095++;
+	    }
+	}
+    }
+  
+  double RatioM080 = (double) M080/nEvent;
+  double RatioM085 = (double) M085/nEvent;
+  double RatioM090 = (double) M090/nEvent;
+  double RatioM095 = (double) M095/nEvent;
+  
+  double RatioN080 = (double) N080/n12Event;
+  double RatioN085 = (double) N085/n12Event;
+  double RatioN090 = (double) N090/n12Event;
+  double RatioN095 = (double) N095/n12Event;
+
+  cout << ">--------[E1]--------<" << endl;
+  cout << "Ratio = 0.80 : " << RatioM080 << endl;
+  cout << "Ratio = 0.85 : " << RatioM085 << endl;
+  cout << "Ratio = 0.90 : " << RatioM090 << endl;
+  cout << "Ratio = 0.95 : " << RatioM095 << endl;
+  cout << ">--------[E1+E2]--------<" << endl;
+  cout << "Ratio = 0.80 : " << RatioN080 << endl;
+  cout << "Ratio = 0.85 : " << RatioN085 << endl;
+  cout << "Ratio = 0.90 : " << RatioN090 << endl;
+  cout << "Ratio = 0.95 : " << RatioN095 << endl;
+}
+

@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <iostream>
+#include <fstream> 
+
+void AroundCmap(){
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(kFALSE);
+  gStyle->SetPalette(1);
+
+  TCanvas* c1 = new TCanvas("c1", "", 20, 20, 600, 500);
+  TFile f("gamma.root");
+  
+  int Event = B4->GetEntries();
+
+  double EabsE1;
+  B4->SetBranchAddress("Eabs50",&EabsE1);
+  double EabsEr0;
+  double EabsEr1;
+  double EabsEr2;
+  double EabsEr3;
+  double EabsEr4;
+  double EabsEr5;
+  double EabsEr6;
+  double EabsEr7;
+  double EabsEr8;
+  double EabsEr9;
+
+  B4->SetBranchAddress("Eabs45",&EabsEr0);
+  B4->SetBranchAddress("Eabs46",&EabsEr1);
+  B4->SetBranchAddress("Eabs47",&EabsEr2);
+  B4->SetBranchAddress("Eabs48",&EabsEr3);
+  B4->SetBranchAddress("Eabs49",&EabsEr4);
+
+  B4->SetBranchAddress("Eabs51",&EabsEr5);
+  B4->SetBranchAddress("Eabs52",&EabsEr6);
+  B4->SetBranchAddress("Eabs53",&EabsEr7);
+  B4->SetBranchAddress("Eabs54",&EabsEr8);
+  B4->SetBranchAddress("Eabs55",&EabsEr9);
+
+  
+  int xbin = 100;
+  int ybin = 100;
+  double xmin = 0.;
+  double xmax = 3.;
+  double ymin = 0.;
+  double ymax = 3.;
+  
+  TH2F* cmap = new TH2F("cmap", "Color map of E1-Er", xbin, xmin, xmax, ybin, ymin, ymax);
+  cmap->GetXaxis()->SetTitle("E1");
+  cmap->GetYaxis()->SetTitle("Er");
+  cmap->GetZaxis()->SetLabelSize(0.03);
+  ((TGaxis*) cmap->GetZaxis())->SetMaxDigits(4);
+  
+  ofstream fout;
+  char output;
+  cin >> output;    
+  fout.open(output);
+  for(int n=0; n<Event; n++)
+    {
+      B4->GetEntry(n);
+      double Er = EabsEr0+EabsEr1+EabsEr2+EabsEr3+EabsEr4+EabsEr5+EabsEr6+EabsEr7+EabsEr8+EabsEr9;
+      cmap->Fill( EabsE1, Er);
+      cout << Er << endl;
+      fout << Er << endl;
+    }
+
+  cmap->Draw("colz");
+  
+  fout.close();
+
+}

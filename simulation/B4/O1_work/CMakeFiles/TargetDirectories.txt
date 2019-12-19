@@ -1,0 +1,7 @@
+/home/ktsuri/MyGeant4/B4/O1_work/CMakeFiles/install/strip.dir
+/home/ktsuri/MyGeant4/B4/O1_work/CMakeFiles/rebuild_cache.dir
+/home/ktsuri/MyGeant4/B4/O1_work/CMakeFiles/exampleB4a.dir
+/home/ktsuri/MyGeant4/B4/O1_work/CMakeFiles/install.dir
+/home/ktsuri/MyGeant4/B4/O1_work/CMakeFiles/install/local.dir
+/home/ktsuri/MyGeant4/B4/O1_work/CMakeFiles/list_install_components.dir
+/home/ktsuri/MyGeant4/B4/O1_work/CMakeFiles/edit_cache.dir

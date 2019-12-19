@@ -1,0 +1,66 @@
+{
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(kFALSE);
+
+  TFile f("electron.root");
+
+  int N095 = 0;
+  int Event = B4->GetEntries();
+  int Layer = 100;
+  double E[100];
+ 
+  for(int i=0; i<Event; i++)
+    {
+      B4->GetEntry(i);
+      stringstream ss;
+      for(int n=0;n<Layer;n++)
+	{
+	  ss.str("");
+	  ss.clear(stringstream::goodbit);
+	  ss<<n;
+	  string name = "Eabs" + ss.str();
+	  B4->SetBranchAddress(name.c_str(),&E[n]);
+	}
+      
+
+      double Etot = E[0];
+      int x[2];
+      int y[2] = 0;
+      x[0] = E[0];
+      x[1] = E[1];
+
+      for(int n=1; n<Layer; n++)
+	{
+	  Etot += E[n];
+	    if(x[0]<E[n])
+	     {
+	       x[1] = x[0];
+	       x[0] = E[n];
+               y[1] = y[0];
+	       y[0] = n;
+	     }
+	  else if(x[1]<E[n])
+	    {
+	      x[1] = E[n];
+	      y[1] = n;
+	    }
+	}
+      cout << i << " " << y[0] << " " << y[1] <<endl;
+
+      double E12;
+      if( 0.<E[y[0]] && y[0] != y[1] ){
+      if(((y[0]-y[1])==1)||((y[0]-y[1])==-1))
+	{
+	  E12 = E[y[0]]+E[y[1]];
+	}
+      double Ratio12 = E12/Etot;
+      if( Ratio12 > 0.95 ) N095++;
+      }}
+    
+  double RatioN095 = (double) N095/Event;
+
+  cout << ">--------[E1+E2]--------<" << endl;
+  cout << "Ratio = 0.95 : " << RatioN095 << endl;
+}
+

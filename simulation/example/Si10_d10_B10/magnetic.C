@@ -1,0 +1,42 @@
+{
+  gROOT->Reset();
+  gStyle->SetOptStat(kFALSE);
+
+  TCanvas c1;
+
+  int n = 3;
+  double x[] = {  0.0,  0.5,  1.0};
+  double y1[] = {0.176,0.359,0.501};
+  double y2[] = {0.561,0.736,0.764};
+
+  TGraph* g1=new TGraph(n,x,y1);
+  g1->SetMarkerStyle(4);
+  TGraph* g2=new TGraph(n,x,y2);
+  g2->SetMarkerStyle(5);
+
+  TMultiGraph *mg = new TMultiGraph("mg","Magnetic Dependence;Magnetic Field / T;Efficiency");
+  
+  mg->Add(g1);
+  mg->Add(g2);
+
+  mg->Draw("AP");
+
+  TLegend *legend = new TLegend( 0.8, 0.68, 0.99, 0.78) ;
+  legend->AddEntry( g1, "Si: 1.0 mm" , "p") ;
+  legend->AddEntry( g2, "Si: 2.0 mm" , "p") ;
+  legend->SetFillColor(0);
+  legend->SetTextSize(0.03);
+  legend->Draw() ;
+  /*
+  g1->GetXaxis()->SetTitle("Magnetic Field / T");
+  g1->GetYaxis()->SetTitle("Efficiency");
+  g1->SetMarkerStyle(4);
+  g1->SetMarkerColor(1);
+  g1->SetMarkerSize(1);
+  g1->Draw("AP");
+  g2->GetXaxis()->SetTitle("Magnetic Field / T");
+  g2->GetYaxis()->SetTitle("Efficiency");
+  g2->SetMarkerStyle(5);
+  g2->Draw("AP");
+  */
+}

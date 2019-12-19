@@ -1,0 +1,127 @@
+
+#include "B4PrimaryGeneratorAction.hh"
+
+#include "G4RunManager.hh"
+#include "G4LogicalVolumeStore.hh"
+#include "G4LogicalVolume.hh"
+#include "G4Box.hh"
+#include "G4Event.hh"
+#include "G4ParticleGun.hh"
+#include "G4ParticleTable.hh"
+#include "G4ParticleDefinition.hh"
+#include "G4SystemOfUnits.hh"
+#include "Randomize.hh"
+
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+B4PrimaryGeneratorAction::B4PrimaryGeneratorAction()
+ : G4VUserPrimaryGeneratorAction(),
+   fParticleGun(nullptr)
+{
+  G4int nofParticles = 10000;
+  fParticleGun = new G4ParticleGun(nofParticles);
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+B4PrimaryGeneratorAction::~B4PrimaryGeneratorAction()
+{
+  delete fParticleGun;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void B4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
+{
+  auto worldLV = G4LogicalVolumeStore::GetInstance()->GetVolume("World");
+
+  G4Box* worldBox = nullptr;
+  if (  worldLV ) {
+    worldBox = dynamic_cast<G4Box*>(worldLV->GetSolid());
+  }
+
+  if ( worldBox ) {
+    worldBox->GetZHalfLength();
+  }
+  else  {
+    G4ExceptionDescription msg;
+    msg << "World volume of box shape not found." << G4endl;
+    msg << "Perhaps you have changed geometry." << G4endl;
+    msg << "The gun will be place in the center.";
+    G4Exception("B4PrimaryGeneratorAction::GeneratePrimaries()",
+      "MyCode0002", JustWarning, msg);
+  }
+
+
+  G4int event,nparticle;
+  G4double start;
+  G4double G4p_0,m_x0,m_y0,m_z0,shift0;
+  G4double G4p_1,m_x1,m_y1,m_z1,shift1;
+
+  G4int nEvent[10000],nParticle[10000];
+  G4double t_start[10000];
+  G4double G4nParticle_0[10000],Momentum_x0[10000],Momentum_y0[10000],Momentum_z0[10000],t_shift0[10000];
+  G4double G4nParticle_1[10000],Momentum_x1[10000],Momentum_y1[10000],Momentum_z1[10000],t_shift1[10000];
+
+  ifstream fin("data2nu.dat");
+  string str;
+
+  if(fin.fail()) {
+    cerr << "File do not exist.\n";
+    exit(0);
+  }
+
+  G4int i=0;
+  
+  G4int nofLayers = 100;
+  G4double absoThickness = 1.5*mm;
+  G4double filmThickness = 0.01*mm;
+  G4double calorSizeXY  = 100.*cm;
+  G4double isoThickness = 0.01*mm;
+  G4double empty_Si = .5*mm;
+  G4double empty_Se = 1.*mm;
+
+  auto block_absoThickness = absoThickness + 2*filmThickness;
+  auto layerThickness = 3*block_absoThickness + isoThickness+ 2*empty_Si + 2*empty_Se;
+  
+  G4double isoSizeXY = CLHEP::RandFlat::shoot( -calorSizeXY/2, calorSizeXY/2);
+  G4double PrimaryPosition = 3*block_absoThickness + isoThickness/2 + 2*empty_Si + empty_Se + layerThickness*(nofLayers/2);
+
+  while(!fin.eof()){
+    fin >> event >> start >> nparticle >> G4p_0 >> m_x0 >> m_y0 >> m_z0 >> shift0 >>  G4p_1 >> m_x1 >> m_y1 >> m_z1 >> shift1;
+
+    nEvent[i]=event;
+    t_start[i]=start;
+    nParticle[i]=nparticle;
+    G4nParticle_0[i]=G4p_0;
+    Momentum_x0[i]=m_x0;
+    Momentum_y0[i]=m_y0;
+    Momentum_z0[i]=m_z0;
+    t_shift0[i]=shift0;
+    G4nParticle_1[i]=G4p_1;
+    Momentum_x1[i]=m_x1;
+    Momentum_y1[i]=m_y1;
+    Momentum_z1[i]=m_z1;
+    t_shift1[i]=shift1;
+    
+  // ここ以降を変更。
+  G4ParticleDefinition* particleDefinition = G4ParticleTable::GetParticleTable()->FindParticle("e-");
+  fParticleGun->SetParticleDefinition(particleDefinition);
+  fParticleGun->SetParticleEnergy(1.511*MeV); // 粒子のエネルギー
+  fParticleGun->SetParticlePosition(G4ThreeVector(isoSizeXY,isoSizeXY,PrimaryPosition)); // 打ち出す位置
+  // 1つの0.511MeVのγ線を-z方向に打ち出す
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(m_x0,m_y0,m_z0)); // 運動量の方向 -z方向
+  fParticleGun->GeneratePrimaryVertex(anEvent); // 登録
+  // もう1つの0.511MeVのγ線を+x方向に打ち出す
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(m_x1,m_y1,m_z1)); // +z方向
+  fParticleGun->GeneratePrimaryVertex(anEvent);
+  i++;
+  }
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+

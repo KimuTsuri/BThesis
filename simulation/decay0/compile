@@ -1,0 +1,1 @@
+f77 decay0.for -o decay0 -L/home/ishilab/E61/2005/lib -lmathlib -lkernlib

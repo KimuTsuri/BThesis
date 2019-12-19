@@ -1,0 +1,167 @@
+{
+  gROOT->Reset();
+  gStyle->SetOptStat(kFALSE);
+
+  TCanvas c1;
+
+ 
+  
+  TFile* tf_00 = new TFile("00.root");
+  TTree* tr_00 = (TTree*)tf_00->Get("B4");  
+  int Event_00 = tr_00->GetEntries();
+  double N_00;
+  double Eabs_00;
+  double Agl_00 = 0.;
+  tr_00->SetBranchAddress("Eabs",&Eabs_00);
+  for(int n=0; n<Event_00; n++)
+    {
+      tr_00->GetEntry(n);
+      if( 1.25<=Eabs_00 && Eabs_00<=1.75 ) N_00++;
+    }
+  double Eff_00 = N_00 / Event_00;
+  
+  
+  TFile* tf_10 = new TFile("10.root");
+  TTree* tr_10 = (TTree*)tf_10->Get("B4");
+  int Event_10 = tr_10->GetEntries();
+  double N_10;
+  double Eabs_10;
+  double Agl_10 = 10.;
+  tr_10->SetBranchAddress("Eabs",&Eabs_10);
+  for(int n=0; n<Event_10; n++)
+    {
+      tr_10->GetEntry(n);
+      if( 1.25<=Eabs_10 && Eabs_10<=1.75 ) N_10++;
+    }
+  double Eff_10 = N_10 / Event_10;
+  
+
+  TFile* tf_20 = new TFile("20.root");
+  TTree* tr_20 = (TTree*)tf_20->Get("B4");
+  int Event_20 = tr_20->GetEntries();
+  double N_20;
+  double Eabs_20;
+  double Agl_20 = 20.;
+  tr_20->SetBranchAddress("Eabs",&Eabs_20);
+  for(int n=0; n<Event_20; n++)
+    {
+      tr_20->GetEntry(n);
+      if( 1.25<=Eabs_20 && Eabs_20<=1.75 ) N_20++;
+    }
+  double Eff_20 = N_20 / Event_20;
+
+  
+  TFile* tf_30 = new TFile("30.root");
+  TTree* tr_30 = (TTree*)tf_30->Get("B4");
+  int Event_30 = tr_30->GetEntries();
+  double N_30;
+  double Eabs_30;
+  double Agl_30 = 30.;
+  tr_30->SetBranchAddress("Eabs",&Eabs_30);
+  for(int n=0; n<Event_30; n++)
+    {
+      tr_30->GetEntry(n);
+      if( 1.25<=Eabs_30 && Eabs_30<=1.75 ) N_30++;
+    }
+  double Eff_30 = N_30 / Event_30;
+  
+  
+  TFile* tf_40 = new TFile("40.root");
+  TTree* tr_40 = (TTree*)tf_40->Get("B4");
+  int Event_40 = tr_40->GetEntries();
+  double N_40;
+  double Eabs_40;
+  double Agl_40 = 40.;
+  tr_40->SetBranchAddress("Eabs",&Eabs_40);
+  for(int n=0; n<Event_40; n++)
+    {
+      tr_40->GetEntry(n);
+      if( 1.25<=Eabs_40 && Eabs_40<=1.75 ) N_40++;
+    }
+  double Eff_40 = N_40 / Event_40;
+
+  
+  TFile* tf_50 = new TFile("50.root");
+  TTree* tr_50 = (TTree*)tf_50->Get("B4");
+  int Event_50 = tr_50->GetEntries();
+  double N_50;
+  double Eabs_50;
+  double Agl_50 = 50.;
+  tr_50->SetBranchAddress("Eabs",&Eabs_50);
+  for(int n=0; n<Event_50; n++)
+    {
+      tr_50->GetEntry(n);
+      if( 1.25<=Eabs_50 && Eabs_50<=1.75 ) N_50++;
+    }
+  double Eff_50 = N_50 / Event_50;
+
+
+  TFile* tf_60 = new TFile("60.root");
+  TTree* tr_60 = (TTree*)tf_60->Get("B4");
+  int Event_60 = tr_60->GetEntries();
+  double N_60;
+  double Eabs_60;
+  double Agl_60 = 60.;
+  tr_60->SetBranchAddress("Eabs",&Eabs_60);
+  for(int n=0; n<Event_60; n++)
+    {
+      tr_60->GetEntry(n);
+      if( 1.25<=Eabs_60 && Eabs_60<=1.75 ) N_60++;
+    }
+  double Eff_60 = N_60 / Event_60;
+
+
+  TFile* tf_70 = new TFile("70.root");
+  TTree* tr_70 = (TTree*)tf_70->Get("B4");
+  int Event_70 = tr_70->GetEntries();
+  double N_70;
+  double Eabs_70;
+  double Agl_70 = 70.;
+  tr_70->SetBranchAddress("Eabs",&Eabs_70);
+  for(int n=0; n<Event_70; n++)
+    {
+      tr_70->GetEntry(n);
+      if( 1.25<=Eabs_70 && Eabs_70<=1.75 ) N_70++;
+    }
+  double Eff_70 = N_70 / Event_70;
+
+  
+  TFile* tf_80 = new TFile("80.root");
+  TTree* tr_80 = (TTree*)tf_80->Get("B4");
+  int Event_80 = tr_80->GetEntries();
+  double N_80;
+  double Eabs_80;
+  double Agl_80 = 80.;
+  tr_80->SetBranchAddress("Eabs",&Eabs_80);
+  for(int n=0; n<Event_80; n++)
+    {
+      tr_80->GetEntry(n);
+      if( 1.25<=Eabs_80 && Eabs_80<=1.75 ) N_80++;
+    }
+  double Eff_80 = N_80 / Event_80;
+  
+  cout << Agl_00 << " " << Eff_00 <<endl;
+  cout << Agl_10 << " " << Eff_10 <<endl;
+  cout << Agl_20 << " " << Eff_20 <<endl;
+  cout << Agl_30 << " " << Eff_30 <<endl;
+  cout << Agl_40 << " " << Eff_40 <<endl;
+  cout << Agl_50 << " " << Eff_50 <<endl;
+  cout << Agl_60 << " " << Eff_60 <<endl;
+  cout << Agl_70 << " " << Eff_70 <<endl;
+  cout << Agl_80 << " " << Eff_80 <<endl;
+
+
+  int n = 9;
+  double x[] = {Agl_00,Agl_10,Agl_20,Agl_30,Agl_40,Agl_50,Agl_60,Agl_70,Agl_80};
+  double y[] = {Eff_00,Eff_10,Eff_20,Eff_30,Eff_40,Eff_50,Eff_60,Eff_70,Eff_80};
+  
+  TGraph* g=new TGraph(n,x,y);
+
+  g->GetXaxis()->SetTitle("Angle / degree");
+  g->GetYaxis()->SetTitle("Efficiency");
+  
+  g->SetMarkerStyle(2);
+  g->SetMarkerColor(1);
+  g->SetMarkerSize(1);  
+  g->Draw("AP");
+}

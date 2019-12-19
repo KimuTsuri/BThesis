@@ -1,0 +1,97 @@
+#include "B4RunAction.hh"
+#include "B4aEventAction.hh"
+#include "B4Analysis.hh"
+
+#include <sstream>
+
+#include "G4Run.hh"
+#include "G4RunManager.hh"
+#include "G4UnitsTable.hh"
+#include "G4SystemOfUnits.hh"
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+B4RunAction::B4RunAction()
+ : G4UserRunAction()
+{ 
+  G4RunManager::GetRunManager()->SetPrintProgress(1);     
+
+  auto analysisManager = G4AnalysisManager::Instance();
+  G4cout << "Using " << analysisManager->GetType() << G4endl;
+
+  analysisManager->SetVerboseLevel(1);
+  analysisManager->SetNtupleMerging(true);
+  
+  analysisManager->CreateH1("Eabs","Energy Deposit in abs", 100, 0., 3.*MeV);
+  analysisManager->CreateH1("Egap","Energy Deposit in gap", 100, 0., 3.*MeV);
+  analysisManager->CreateH1("Labs","Track Length in absorber", 100, 0., 10*mm);
+  analysisManager->CreateH1("Lgap","Track Length in gap", 100, 0., 10*mm);
+
+  analysisManager->CreateNtuple("B4", "Edep and TrackL");
+  analysisManager->CreateNtupleDColumn("Eabs");
+  analysisManager->CreateNtupleDColumn("Egap");
+  analysisManager->CreateNtupleDColumn("Labs");
+  analysisManager->CreateNtupleDColumn("Lgap");
+  std::stringstream ss;
+  for (G4int i=0; i<100; ++i)
+    {
+      ss.str("");
+      ss<< "Eabs_01_" << i;
+      analysisManager->CreateNtupleDColumn(ss.str().c_str());
+      ss.str("");
+      ss<< "Eabs_02_" << i;
+      analysisManager->CreateNtupleDColumn(ss.str().c_str());
+      ss.str("");
+      ss<< "Egap" << i;
+      analysisManager->CreateNtupleDColumn(ss.str().c_str());
+    }
+  analysisManager->FinishNtuple();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+B4RunAction::~B4RunAction()
+{
+  delete G4AnalysisManager::Instance();  
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void B4RunAction::BeginOfRunAction(const G4Run* /*run*/)
+{ 
+  auto analysisManager = G4AnalysisManager::Instance();
+  G4String fileName = "B4";
+  analysisManager->OpenFile(fileName);
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void B4RunAction::EndOfRunAction(const G4Run* /*run*/)
+{
+  auto analysisManager = G4AnalysisManager::Instance();
+  if ( analysisManager->GetH1(1) ) {
+    G4cout << G4endl << " ----> print histograms statistic ";
+    if(isMaster) {
+      G4cout << "for the entire run " << G4endl << G4endl; 
+    }
+    else {
+      G4cout << "for the local thread " << G4endl << G4endl; 
+    }
+    /*    
+    G4cout << "Total EnergyDeposit : mean = "
+	   << G4BestUnit(analysisManager->GetH1(0)->mean(), "Energy")
+	   << " rms = "
+	   << G4BestUnit(analysisManager->GetH1(0)->rms(),  "Energy") << G4endl;
+
+    G4cout << " Total TrackLength : mean = "
+	   << G4BestUnit(analysisManager->GetH1(2)->mean(), "Length")
+	   << " rms = "
+	   << G4BestUnit(analysisManager->GetH1(2)->rms(),  "Length") << G4endl;
+    */  
+}
+
+  analysisManager->Write();
+  analysisManager->CloseFile();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

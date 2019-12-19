@@ -1,0 +1,72 @@
+{
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(kFALSE);
+
+  TCanvas* c1 = new TCanvas("c1", "", 20, 20, 1300, 1000);
+  c1->Divide(2,2);
+  c1->SetLogy();
+
+  TFile* e = new TFile("electron.root");
+  TTree* te = (TTree*)e->Get("B4");
+
+  TFile* g = new TFile("gamma.root");
+  TTree* tg = (TTree*)g->Get("B4");
+
+  double Eabs50;
+  double Eabs51;
+  te->SetBranchAddress("Eabs50",&Eabs50);
+  te->SetBranchAddress("Eabs51",&Eabs51);
+
+  int Event_e = te->GetEntries();
+
+  TH1F *h1_e = new TH1F("h1_e","", 100, 0.0, 3.0);
+  h1_e->SetTitle("E1 Histogram of Electron;Energy Deposit / MeV;Counts;");
+  TH1F *h2_e = new TH1F("h2_e","", 100, 0.0, 3.0);
+  h2_e->SetTitle("E2 Histogram of Electron;Energy Deposit / MeV;Counts;");
+  
+  for(int n=0; n<Event_e; n++)
+    {
+      te->GetEntry(n);
+      double E1_e = Eabs50;
+      double E2_e = Eabs51;
+      h1_e->Fill(E1_e);
+      h2_e->Fill(E2_e);
+    }
+
+
+  double Eabs52;
+  double Eabs54;
+  te->SetBranchAddress("Eabs52",&Eabs52);
+  te->SetBranchAddress("Eabs54",&Eabs54);
+
+  int Event_g = tg->GetEntries();
+
+  TH1F *h1_g = new TH1F("h1_g","", 100, 0.0, 3.0);
+  h1_g->SetTitle("E1 Histogram of Gamma;Energy Deposit / MeV;Counts;");
+  TH1F *h2_g = new TH1F("h2_g","", 100, 0.0, 3.0);
+  h2_g->SetTitle("E2 Histogram of Gamma;Energy Deposit / MeV;Counts;");
+
+  for(int n=0; n<Event_g; n++)
+    {
+      tg->GetEntry(n);
+      double E1_g = Eabs52;
+      double E2_g = Eabs54;
+      h1_g->Fill(E1_g);
+      h2_g->Fill(E2_g);
+    }
+  
+  
+  c1->cd(1);
+  h1_e->Draw();
+
+  c1->cd(2);
+  h2_e->Draw();
+
+  c1->cd(3);
+  h1_g->Draw();
+  
+  c1->cd(4);
+  h2_g->Draw();
+
+}

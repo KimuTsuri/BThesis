@@ -1,0 +1,42 @@
+{
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  //  gStyle->SetOptStat(kFALSE);
+
+
+  TFile f("B4.root");
+
+  TCanvas* c1 = new TCanvas("c1", "", 20, 20, 1000, 1500);
+  c1->Divide(2,3);
+
+  /*  c1->cd(1);
+  TH1D* hist1 = (TH1D*)f.Get("Eabs");
+  hist1->Draw("HIST");
+  hist1->SetXTitle("MeV");*/
+
+  c1->cd(1);
+  TTree* tr = (TTree*)f.Get("B4");
+  tr->Draw("Eabs29");
+  
+  c1->cd(2);
+  TTree* tr0 = (TTree*)f.Get("B4");
+  tr0->Draw("Eabs30");
+
+  c1->cd(3);
+  TTree* tr1 = (TTree*)f.Get("B4");
+  tr1->Draw("Eabs31");
+
+  c1->cd(4);
+  TTree* tr2 = (TTree*)f.Get("B4");
+  tr2->Draw("Eabs32");
+
+  c1->cd(5);
+  TTree* tr3 = (TTree*)f.Get("B4");
+  tr3->Draw("Eabs33");
+
+  c1->cd(6);
+  TTree* tr4 = (TTree*)f.Get("B4");
+  tr4->Draw("Eabs34");
+  
+  
+}
