@@ -1,0 +1,1528 @@
+\documentclass[a4paper,10pt]{jreport}
+
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage{here}
+\usepackage{graphicx}
+\usepackage{ascmac}
+\usepackage{siunitx}
+\usepackage{braket}
+\usepackage{url}
+\usepackage{listings}
+
+\setlength{\textheight}{\paperheight}
+\setlength{\topmargin}{-5mm}
+\addtolength{\textheight}{-60mm}
+\setlength{\textwidth}{\paperwidth}
+\setlength{\oddsidemargin}{5mm}
+\addtolength{\textwidth}{-60mm}
+
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+
+
+
+
+\title{
+2018年度 \ 学位論文 \\
+\vspace{20mm}
+\huge Si半導体検出器を用いた \\
+\huge ニュートリノを伴わない二重$\beta$崩壊探索
+\vspace{50mm}
+}
+\author{
+東京理科大学 \ 理工学部 \ 物理学科4年 \\
+学籍番号 \ 6215085 \vspace{5mm} \\
+\LARGE 釣 \ 希夢 \vspace{5mm} \\
+指導 \ 石塚 \ 正基 \ 准教授 \vspace{5mm}
+}
+\date{\today}
+
+
+
+
+\begin{document}
+
+
+
+
+\maketitle
+
+\chapter*{概要}
+\addcontentsline{toc}{chapter}{概要}
+\pagenumbering{roman}
+
+ニュートリノを伴わない二重$\beta$崩壊とは、ニュートリノがマヨラナ粒子である場合に予言される崩壊モードである。
+通常、二重$\beta$崩壊では、2つの電子と2つのニュートリノが放出される。
+マヨラナ粒子とは、物質が反物質と区別がつかないマヨラナ粒子である。
+ニュートリノがマヨラナ粒子である場合、ニュートリノ自身が反ニュートリノであるため、二重$\beta$崩壊時にニュートリノが放出されないモードが存在すると考えられる。
+このニュートリノを伴わない二重$\beta$崩壊を観測することは、ニュートリノがマヨラナ粒子であることを説明するだけでなく、ニュートリノの質量を決定し、シーソー機構、レプトジェネシスなどを説明することに繋がる。
+これは、標準模型を超える新たな物理への発展を意味する。
+
+本研究では、ニュートリノを伴わない二重$\beta$崩壊を探索するためSi半導体検出器と、二重$\beta$崩壊する同位体$^{82}$Seを用いた新しい検出器を検証する。
+先の研究でニュートリノを伴わない二重$\beta$崩壊を探索するための実験は行われてきた。
+それらの研究における検出器構造は大きく分けて2種類に分類できる。
+検出器と二重$\beta$崩壊する同位体が同一構造を持つものと、二重$\beta$崩壊で出てきた電子の軌跡とそのエネルギーを検出器で観測する構造のものがあった。
+本研究で考える構造は、検出器と同位体をレイヤー状に配置し、二重$\beta$崩壊で放出される2電子のエネルギーのみを観測する構造である。
+このレイヤー構造Si検出器をシミュレーションし、性能評価を本研究における目標とする。
+
+\clearpage
+
+
+
+
+\tableofcontents
+\thispagestyle{empty}
+\clearpage
+
+
+
+\listoftables
+\thispagestyle{empty}
+\clearpage
+
+
+
+\listoffigures
+\thispagestyle{empty}
+\clearpage
+
+\pagenumbering{arabic}
+
+
+
+
+\chapter{物理背景}
+
+
+
+
+\section{ニュートリノ}
+
+
+
+
+\subsection{ニュートリノの発見}
+
+ニュートリノとは1930年にW.Pauliによって提唱された素粒子である。
+当時、$\beta$崩壊過程は、(\ref{Eq-n->p+e})式のような中性子$n$が陽子$p$に崩壊するとき電子$e^-$($\beta$線)を放出する反応過程であると考えられていた。
+
+\begin{equation} \label{Eq-n->p+e}
+	n \to p+e^-
+\end{equation}
+
+質量を含めた全エネルギーはエネルギー保存則により崩壊の前後背保存される。
+(\ref{Eq-n->p+e})式のような2体崩壊の場合、運動量保存則により$\beta$線のエネルギーは一定の値となるはずである。
+しかし、放射線研究の過程で測定された$\beta$線エネルギースペクトルは、広がりを持った連続スペクトルであった。
+この問題を解決するためにW.Pauliは、電荷を持たない中性の粒子がエネルギーを持ち去っているという仮説を提唱した\cite{Pauli}。
+
+\begin{equation} \label{Eq-n->p+e+nu}
+	n \to p+e^-+\bar{\nu}_e
+\end{equation}
+
+(\ref{Eq-n->p+e+nu})式において、$\nu$がニュートリノを表す。
+$\bar{\nu}_e$は反電子ニュートリノと呼ばれるニュートリノの1種である。
+ニュートリノは電荷を持たないという性質から、長年確認されていなかった。
+1956年にF.Reinesらによって原子炉から放射される反電子ニュートリノと陽子との反応
+
+\begin{equation}
+	\bar{\nu}_e +p \to e^+ +n
+\end{equation}
+
+の観測から存在が確認された。
+
+
+
+
+\subsection{ニュートリノ振動}
+
+ニュートリノには$\nu_e,\nu_{\mu},\nu_{\tau}$の3種とその反粒子が存在する。
+1962年に牧、中川、坂田らによってこの3種のフレーバーが変化するニュートリノ振動を提唱した。
+ニュートリノの3種のフレーバー固有状態$\ket{\nu_{\alpha}},(\alpha=e,\mu,\tau)$が質量固有状態$\ket{\nu_i},(i=1,2,3)$の重ね合わせで表わされ、0出ない質量を持つとき飛程又は時間によって異なるフレーバー状態に変化する現象が起こる。
+この現象がニュートリノ振動と呼ばれる。
+フレーバー固有状態と質量固有状態の重ね合わせは、(\ref{Eq-NeutrinoOscillation1})のように書くことができる。
+
+\begin{equation} \label{Eq-NeutrinoOscillation1}
+	\ket{\nu_{\alpha}}=\sum_i U_{\alpha i}\ket{\nu_i}
+\end{equation}
+
+ここでユニタリ行列$U_{\alpha i}$はMNS(Maki-Nakagawa-Sakata)行列呼ばれ
+
+\begin{eqnarray} \label{Eq-Unitary}
+U 
+&=&
+\left(
+	\begin{array}{ccc}
+		1 & 0 & 0 \\
+		0 & c_{23} & s_{23} \\
+		0 & -s_{23} & c_{23}
+	\end{array}
+\right)
+\left(
+	\begin{array}{ccc}
+		c_{13} & 0 & s_{13}e^{-i\delta} \\
+		0 & 1 & 0 \\
+		-s_{13}e^{-i\delta} & 0 & c_{13}
+	\end{array}
+\right)
+\left(
+	\begin{array}{ccc}
+		c_{12} & s_{12} & 0 \\
+		-s_{12} & c_{12} & 0 \\
+		0 & 0 & 1
+	\end{array}
+\right) \nonumber \\ 
+&=&
+\left(
+	\begin{array}{ccc}
+		c_{12}c_{13} & s_{12}c_{13} & s_{13}e^{-i\delta} \\
+		-s_{12}c_{23}-c_{12}s_{13}s_{23}e^{i\delta} & c_{12}c_{23}-s_{12}s_{13}s_{23}e^{i\delta} & c_{13}s_{23} \\
+		s_{12}s_{23}-c_{12}s_{13}c_{23}e^{i\delta} & -c_{12}s_{23}-s_{12}s_{13}c_{23}e^{i\delta} & c_{13}c_{23}
+	\end{array}
+\right)
+\end{eqnarray}
+
+と表される。
+ここで$\cos\theta_{ij}=c_{ij},\sin\theta_{ij}=s_{ij}$と置き、$\theta_{ij}$は質量固有状態$i,j$の混合角、$\delta$は複素位相とした。
+
+簡単のためニュートリノが2種しかない場合のニュートリノ振動を考える。
+2つのフレーバー固有状態$\nu_a$と$\nu_b$と質量固有状態$\nu_1$と$\nu_2$が混合角$\theta$で混ざっているとすると
+
+\begin{equation} \label{Eq-NeutrinoOscillation2}
+\left(
+	\begin{array}{c}
+		\nu_a \\
+		\nu_b
+	\end{array}
+\right)
+=
+\left(
+	\begin{array}{cc}
+		\cos\theta & \sin\theta \\
+		-\sin\theta & \cos\theta 
+	\end{array}
+\right)
+\left(
+	\begin{array}{c}
+		\nu_1 \\
+		\nu_2
+	\end{array}
+\right)
+\end{equation}
+
+と表せる。よって
+
+\begin{eqnarray}
+	\ket{\nu_a} &=& \cos\theta\ket{\nu_1}+\sin\theta\ket{\nu_2} \\
+	\ket{\nu_b} &=& -\sin\theta\ket{\nu_1}+\cos\theta\ket{\nu_2}
+\end{eqnarray}
+
+となる。
+質量固有状態の時間発展は、粒子の運動量を$p_j$、質量を$m_j$とし、$E_j=\sqrt{p_j^2+m_j^2}$を用いて
+
+\begin{equation}
+	\ket{\nu_j(t)}=\exp(-iE_jt)\ket{\nu_j(0)}
+\end{equation}
+
+と書ける。よってフレーバー$a$の時間発展は
+
+\begin{eqnarray} \label{Eq-nu_time}
+	\ket{\nu_a}
+		&=& \cos\theta\ket{\nu_1(t)}+\sin\theta\ket{\nu_2(t)} \nonumber \\
+		&=& \cos\theta e^{-iE_1t}\ket{\nu_1(0)}+\sin\theta e^{-iE_2t}\ket{\nu_2(0)} \nonumber \\
+		&=& \cos\theta e^{-iE_1t}(\cos\theta\ket{\nu_a}-\sin\theta\ket{\nu_b})+\sin\theta e^{-iE_2t}(\sin\theta\ket{\nu_a}+		\cos\theta\ket{\nu_b}) \nonumber \\
+		&=& (\cos^2\theta e^{-iE_1t}+\sin^2\theta e^{-iE_2t})\ket{\nu_a}+\sin\theta\cos\theta(e^{-iE_1t}-e^{-iE_2t})\ket{\nu_b}
+\end{eqnarray}
+
+と表せる。(\ref{Eq-nu_time})より$\nu_a(t)$の時間発展に$\nu_b$成分が含まれており、ニュートリノ振動することがわかる。
+$\nu_a$が時間$t$後に$\nu_b$として観測される確率は
+
+\begin{eqnarray} \label{Eq-P_NeutrinoOscillation}
+	P(\nu_a\to\nu_b) &=& |\sin\theta\cos\theta(e^{-iE_1t}-e^{-iE_2t})|2 \nonumber \\
+	&=& \frac{1}{4}\sin^22\theta(2-2\cos(E_2-E_1)t) \nonumber \\
+	&=& \sin^22\theta\sin^2\left(\frac{\Delta Et}{2}\right)
+\end{eqnarray}
+
+となる。ここでエネルギー差$\Delta E=E_2-E_1$とした。
+
+\begin{eqnarray} \label{Eq-EnergyDifference}
+	\Delta E=E_2-E_1 &=& \sqrt{p_2^2+m_2^2}-\sqrt{p_1^2+m_1^2} \nonumber \\
+	&\sim& \left( p_2+\frac{m_2^2}{2p_2} \right)-\left( p_1+\frac{m_1^2}{2p_1} \right) \nonumber \\
+	&\sim& \frac{\Delta m^2}{2E}
+\end{eqnarray}
+
+ここで、(\ref{Eq-EnergyDifference})において$m_j\ll p_j,p_j\sim E,\Delta m=m_2^2-m_1^2$とした。ニュートリノが光速で運動しているとみなし$\nu_a$が距離$L=ct$進んだときのニュートリノ振動確率は
+
+\begin{equation} \label{P_NeutrinoOscillation_c}
+P(\nu_a\to\nu_b) = \sin^22\theta\sin^2\left(\frac{1.27\Delta m^2\ [\rm{eV}] L\ [\rm{km}]}{E\ [\rm{GeV}]}\right)
+\end{equation}
+
+となる\cite{Syuron_2010}。
+
+以上より、ニュートリノのエネルギー$E$とその反応の事象数を測定することにより、振幅から質量固有状態の混合角$\theta$、周期から質量二乗差$\Delta m^2$を知ることができる。
+
+
+
+
+\subsection{ニュートリノの質量}
+
+ニュートリノの有効質量を予言するモデルとして、順階層型(Normal Hierarchy)、逆階層型(Inverted Hierarchy)、準縮退型 (Quasi Degenerate)の3種の質量階層構造が考えられている。
+これまでの研究により、$\Delta m_{21}\sim 7\times10^{-5}\ \rm{eV}^2,|\Delta m^2|_{32}\sim 2\times10^{-3}\ \rm{eV}^2$という値が得られているが、質量の絶対値は未だ測定されていない。
+$m_2>m_1$ということはわかっているが、$m_3$と$m_1,m_2$の大小関係は未知である(質量階層性問題)。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-MassHierarchy.png}
+	\caption{質量階層構造} \label{Fig-MassHierarchy.png}
+\end{figure}
+
+\begin{enumerate}
+	\item 順階層型(Normal Hierarchy) \\
+	\begin{equation}
+		m_1 < m_2 \ll m_3
+	\end{equation}
+	この場合、電子ニュートリノ有効質量には制限がつけられず、黒檀に小さいこともあり得る。
+	
+	\item 逆階層型(Inverse Hierarchy) \\
+	\begin{equation}
+		m_3 \ll m_1 < m_2
+	\end{equation}
+	この場合、$|\Delta m^2|_{23}$の値から、電子の有効質量に下限が考えられる。
+	
+	\item 準縮退型(Quasi Degenerate) \\
+	\begin{equation}
+		m_1 \sim m_2 \sim m_3
+	\end{equation}
+	質量固有値の絶対値が大きく、質量固有値の差が小さいこともあり得る。
+	この場合には、電子の有効質量には制限がつかない。
+	
+\end{enumerate}
+
+ニュートリノ振動現象の研究で調べられるのは質量二乗差であり、ニュートリノの質量の絶対値は得られない。そこで他のアプローチが必要となり、その一つとしてニュートリノを伴わない二重$\beta$崩壊がある。
+
+
+
+
+\section{マヨラナ粒子}
+
+
+
+
+\subsection{マヨラナ粒子}
+
+スピン$1/2$のフェルミ粒子のうち粒子と反粒子の区別がつく粒子をディラック粒子、区別がつかない粒子をマヨラナ粒子と呼ぶ。
+電子や$\mu$粒子は電荷を持ち、粒子と反粒子の区別がつくためディラック粒子である。
+ニュートリノは電荷を持たないためマヨラナ粒子である可能性がある。
+弱い相互作用の反応から、ニュートリノは左巻きのスピンのみを持ち、反ニュートリノは右巻きのスピンを持つことがわかっている。
+フェルミ粒子のラグランジアンにおける質量項$L$は、ニュートリノのディラック質量$m_D$、左巻きの粒子場$\Phi_L$と右巻き粒子場$\Phi_R$を用いて以下のように表すことができる。
+
+\begin{equation} \label{Eq-MassTerm_fermi}
+	L=m_D\bar{\Phi}_R\Phi_L
+\end{equation}
+
+もし、ニュートリノがマヨラナ粒子であった場合、粒子と反粒子の変換が可能である。
+よって(\ref{Eq-MassTerm_marjorana_L})のように左巻きの粒子場のみで記述ができる。
+
+\begin{equation} \label{Eq-MassTerm_marjorana_L}
+	L=m_L(\bar{\Phi}_L)^C\Phi_L
+\end{equation}
+
+ここで$m_L$は左巻きニュートリノの質量である。
+同様にして、未発見ではあるが、右巻き粒子場の記述もできる。
+右巻きニュートリノの質量を$m_L$とすると
+
+\begin{equation} \label{Eq-MassTerm_marjorana_R}
+	L=m_R(\bar{\Phi}_R)^C\Phi_R
+\end{equation}
+
+と書ける。
+以上のように、ニュートリノがマヨラナ粒子であった場合、右巻きと左巻きで独立な質量を与えられる。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-StandardModel.png}
+	\caption{標準模型} \label{Fig-StandardModel}
+\end{figure}
+
+標準模型においてニュートリノの質量は0である。
+しかし、ニュートリノを伴わない二重$\beta$崩壊が観測されると、後述の(\ref{Eq-EffectiveMass})式の関係から$\tau$の寿命によりニュートリノの質量が決定される。
+
+
+
+
+\subsection{シーソー機構}
+
+シーソー機構とは、1979 年に Gell-Mann、柳田らによっ て提唱された機構である。
+ニュートリノのラグランジアンにおける質量行列は
+
+\begin{equation} \label{Eq-MassMatrix}
+	\bm{M} =
+	\left(
+		\begin{array}{cc}
+		m_L & m_D \\
+		m_D & m_R
+		\end{array}
+	\right)
+\end{equation}
+
+と書くことができる。
+対角化すると
+
+\begin{equation} \label{Eq-Seesaw}
+	m_L=\frac{m_D^2}{m_R}
+\end{equation}
+
+となる。
+ディラック質量を$m_D\sim\rm{GeV}$程度とすると右巻きニュートリノの質量が大きい場合、極端に軽い左巻きニュートリノの質量が説明できる。
+この右巻きと左巻きの質量の関係をシーソー機構という。
+観測される左巻きニュートリノの質量は他の粒子に比べて非常に小さいことがわかっている。
+この理論が正しいとすると、左巻きニュートリノの質量から右巻きニュートリノの質量はスケールは$\sim 10^{16}\  \rm{GeV}$となり、大統一理論のスケールとなる。
+これは、右巻きニュートリノが未だ観測されておらず、非常に観測が困難であることを説明できる。
+
+
+
+
+\subsection{レプトジェネシス}
+
+レプトジェネシスは、現在の宇宙に反粒子がほとんど存在しない原因を説明する有力な候補として考えられている。
+宇宙初期には、粒子と反粒子は同数存在していたとされているが、現在の宇宙では粒子が優勢である。
+これは、宇宙において粒子と反粒子は非対称性を持つことを指す。
+シーソ機構で宇宙初期の高エネルギー状態を考えると、右巻きニュートリノが左巻きニュートリノ同様に存在していたと考えられるが、重い右巻きニュートリノは崩壊していく。
+この崩壊を通じて、レプトン数とバリオン数の非対称性が生じる。
+これがレプトジェネシスの考え方である。
+ニュートリノがマヨラナ粒子である場合、宇宙初期にレプトン数が生成されることが自然に説明でき、レプトジェネシスによる物質の期限の説明が成り立つ。
+
+
+
+
+\section{ニュートリノを伴わない二重$\beta$崩壊}
+
+
+
+
+\subsection{二重$\beta$崩壊}
+
+二重$\beta$崩壊とは、$\beta$崩壊が原子核内で同時に起こる現象である。
+すなわち(\ref{Eq-DoubleBetaDecay_2nu})で表すような電子2つが同時に飛び出し、原子番号を2つ大きくする反応過程である。
+
+\begin{equation} \label{Eq-DoubleBetaDecay_2nu}
+	(Z,A)\to(Z+2,A)+2e^-+2\bar{\nu}_e
+\end{equation}
+
+二重$\beta$崩壊は、元の原子核よりも原子番号が1つ大きい原子核のエネルギー準位の方が大きく、通常の$\beta$崩壊が起こらない場合に起きる(図\ref{Fig-82SeDoubleDecayMode})。
+ここで、$(Z,A)$と$(Z+2,A)$は安定した安定した偶-偶核でなければならない。
+二重$\beta$崩壊の起こる原子核の例を表\ref{Tab-82SeDoubleDecayTable}にまとめた。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-82SeDoubleDecayMode.png}
+	\caption{二重$\beta$崩壊する原子核のエネルギー準位例($^{82}$Se)} \label{Fig-82SeDoubleDecayMode}
+\end{figure}
+
+\begin{table}[H] 
+	\center
+	\caption{二重$\beta$崩壊する原子核の例\cite{Syuron_2011}} \label{Tab-82SeDoubleDecayTable}
+	\begin{tabular}{cccc}
+		\hline
+		原子核 & $T_{1/2}^{0\nu}\ [\rm{year}]$ & $Q_{\beta\beta}\ [\rm{MeV}]$ & 存在比[\%] \\
+		\hline
+		$\rm{{^{48}Ca} \to {^{48}Ti}}$ & $4.4\times 10^{19}$ & 4.271 & 0.187 \\
+		$\rm{{^{76}Ge} \to {^{76}Se}}$ & $1.8\times 10^{21}$ & 2.040 & 7.8 \\
+		$\rm{{^{82}Se} \to {^{82}Kr}}$ & $96\times 10^{19}$ & 2.995 & 9.2 \\
+		$\rm{{^{100}Mo} \to {^{100}Ru}}$ & $7.1\times 10^{18}$ & 3.034 & 9.6 \\
+		$\rm{{^{130}Te} \to {^{130}Xe}}$ & $2.7\times 10^{21}$ & 2.533 & 34.5 \\
+		$\rm{{^{136}Xe} \to {^{136}Ba}}$ & $2.1\times 10^{22}$ & 2.479 & 8.9 \\
+		$\rm{{^{150}Nd} \to {^{150}Sm}}$ & $9.2\times 10^{18}$ & 3.367 & 5.6 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+
+\subsection{ニュートリノを伴わない二重$\beta$崩壊}
+
+(\ref{Eq-DoubleBetaDecay_2nu})式で示される通常の二重$\beta$崩壊($2\nu\beta\beta$)に加え、ニュートリノがマヨラナ粒子である場合は、ニュートリノを放出しない二重$\beta$崩壊過程が予言される。
+原子核内の中性子が陽子に崩壊する過程で、電子$e^-$と反電子ニュートリノ$\bar{\nu}_e$を生じるが、反電子ニュートリノ$\bar{\nu}_e$が電子ニュートリノ$\nu_e$のように振る舞うため、もう一方の崩壊過程に電子ニュートリノが吸収される。
+すなわち、(\ref{Eq-DoubleBetaDecay})のように崩壊過程においてニュートリノが放出されない。
+以下、このモードの事を$0\nu\beta\beta$と呼ぶ。
+\begin{equation} \label{Eq-DoubleBetaDecay}
+	(Z,A)\to(Z+2,A)+2e^-
+\end{equation}
+図\ref{Fig-FeynmanDiagram}に$2\nu\beta\beta$と$0\nu\beta\beta$の2つの崩壊モードのFeynman Diagramを示す。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-FeynmanDiagram.png}
+	\caption{$2\nu\beta\beta$と$0\nu\beta\beta$のFeynman Diagram} \label{Fig-FeynmanDiagram}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-EnergyDiscribution.png}
+	\caption{$2\nu\beta\beta$と$0\nu\beta\beta$で生じる電子のエネルギー和} \label{Fig-EnergyDiscribution}
+\end{figure}
+
+$2\nu\beta\beta$の電子の運動エネルギースペクトルは、ニュートリノが運動エネルギーを持ち去るため広がりを持つ連続スペクトルとなる。
+一方$0\nu\beta\beta$では、ニュートリノを放出せず、崩壊前後の原子核の質量差は2つの電子のエネルギーに変換されるため、そのエネルギー和は一定となる。
+すなわち、観測するエネルギースペクトルは鋭いピークを持つ。
+ピークのエネルギー値を$Q_{\beta\beta}$値と呼ぶ。
+
+
+
+
+\subsection{半減期と有効質量}
+
+$0\nu\beta\beta$の半減期は(\ref{Eq-HalfLife})で表される。
+
+\begin{equation} \label{Eq-HalfLife}
+	\left(T_{1/2}^{0\nu}\right)^{-1} = G^{0\nu}|M^{0\nu}|^2<m_{\beta\beta}>^2
+\end{equation}
+
+ここで$G^{0\nu}$は位相空間因子、$M^{0\nu}$は核行列要素である。
+$<m_{\beta\beta}>$はニュートリノの有効質量であり、以下のように与えられる。
+
+\begin{equation} \label{Eq-EffectiveMass}
+	< m_{\beta\beta} > =|\sum_i U_{ei}^2m_{\nu i}|
+\end{equation}
+
+ここで$U_{ei}$はMNS行列、$m_{\nu i}$はニュートリノの絶対質量である。
+
+
+
+
+\subsection{主なニュートリノを伴わない二重$\beta$崩壊探索実験}
+
+先に行われてきたニュートリノを伴わない二重$\beta$崩壊探索実験を紹介する。
+
+\begin{itemize}
+
+	\item HDM \\
+	HDM(Heidelberg Moscow)実験は、約10kgの濃縮$^{76}$Geを用いた実験で、
+	半減期 $T_{1/2}^{0\nu}(^{76}\rm{Ge}) = 2.23 ^{+0.44} _{-0.31} \times 10^{25} \ \rm{year}$、
+	有効質量 $< m_{\beta\beta} > < \SI{0.35}{eV}$
+	が得られている。
+	検出器はイタリアの国際グラン・サッソ研究所の地下施設にあり、エネルギー分解能〜\SI{3}{keV}を達成している\cite{HDM}。
+	
+	\item IGEX \\
+	IGEX(The International Glonass)実験は、HDM実験と同じく$^{76}$Geを用いた実験で、
+	半減期 $T_{1/2}^{0\nu}(^{76}\rm{Ge}) = 1.57 \times 10^{25} \ \rm{year}$、
+	有効質量 $< m_{\beta\beta} > < \SI{0.33}{eV} \sim \SI{1.35}{eV}$
+	が得られている。
+	
+	\item MAJORANA \\
+	米国サウスダコタ州の地下約\SI{1.5}{km}の深さに位置する研究所、Sanford Underground Research Laboratoryでの実験。
+	約30kgの約86\% 濃縮$^{76}$Geを用いた実験である。
+	将来的に1トンの濃縮$^{76}$Geを用い、$Q_{\beta\beta}=\SI{2039}{keV}$の周り\SI{4}{keV}領域で
+	\SI{1}{count/ton \cdot year}を目標としている\cite{MAJORANA}。
+	
+	\item GERDA \\
+	GERDA(GERmanium Detector Array)実験は、\SI{35.6}{kg}の約87\% 濃縮$^{76}$Geを用いた実験で、
+	IGEX実験で用いたcoaxial検出器とBEGe(Broad Energy Germanium)検出器を用いた観測。
+	半減期の下限 $T_{1/2}^{0\nu}(^{76}\rm{Ge}) > 8.0 \times 10^{25} \ \rm{year}$で
+	BEGe検出器におけるバックグラウンド$1.0 ^{+0.6} _{-0.4} \times 10^{-3} \ \rm{cts/(keV \cdot kg \cdot yr)}$が得られている。
+	将来計画として200kgの高濃度$^{76}$Geを用いた
+	LGEND(Large Enriched Germanium Experiment for Neutrinoless Double Beta Decay)実験ある。
+	MAJORANA実験とコラボレーションし、更なる低バックグラウンドを目指す\cite{GERDA}。
+	
+	\item NEMO-3・SuperNEMO \\
+	NEMO(Neutrino Ettore Majorana Observatory)コラボレーションが行うSuperNEMO実験と、
+	その前身であるNEMO-3実験は、フランスとイタリア国境のFr$\acute{\rm{e}}$jusトンネルにある地下実験施設
+	Fr$\acute{\rm{e}}$jus underground laboratoryで行われている実験である。
+	$^{100}$Moを\SI{6.9}{kg}、$^{82}$Seを\SI{0.93}{kg}、$^{130}$Teを\SI{0.45}{kg}、$^{100}$Cdを\SI{0.40}{kg}等、
+	7種類のソースを円筒状に配置した構造を持つ。
+	磁場をかけることによる電子の軌跡とプラスチックシンチレータによるエネルギーの検出による探索実験である。
+	NEMO-3実験では、$^{100}$Moで
+	半減期 $T_{1/2}^{0\nu}(^{100}\rm{Mo}) > 5.8 \times 10^{23} \ \rm{year}$、
+	有効質量 $< m_{\beta\beta} > < \SI{0.6}{eV} \sim \SI{1.3}{eV}$、
+	$^{82}$Seで
+	$T_{1/2}^{0\nu}(^{82}\rm{Se}) > 2.1 \times 10^{23} \ \rm{year}$、
+	$< m_{\beta\beta} > < \SI{1.2}{eV} \sim \SI{2.2}{eV}$
+	が得られている\cite{NEMO}。
+	
+	\item CANDLES \\
+	CANDLES(CAlcium fluoride for studies of Neutrino and Dark matters by Low Energy Spectrometers)実験は、
+	$Q_{\beta\beta}=\SI{4.271}{MeV}$を持ち、低バックグラウンドが実現できる
+	$^{42}$Caを含む$\rm{CaF_2}$を用いた実験である。
+	天然存在比が0.187\% であるため$^{42}$Caを濃縮するための手法開発を進めている\cite{CANDLES}。
+	
+	\item SNO+ \\
+	SNO(Sudbury Neutrino Observatory)実験は、重水を用いた水チェレンコフ検出器を用いた実験であり、
+	太陽ニュートリノ観測によりニュートリノ振動の証拠を報告していることで良く知られている。
+	$^{150}$Ndを含むネオジウム1トンを液体シンチレータ検出器と入れ替えることによって$0\nu\beta\beta$探索を行うのが、
+	SNO+計画である。
+	
+	\item NEXT \\
+	 NEXT(Neutrino Experiment with a high-pressure Xe TPC)実験は、
+	 90\% の濃縮$^{136}$Xeを用いたTPC(time projection chamber)方式検出器を用いた実験である。
+	 将来計画としてNEXT-100実験を考えられており、
+	 バックグラウンド $5 \times 10^{-4} \ \rm{ counts/(keV \cdot kg \cdot year)}$
+	 において
+	 半減期 $T_{1/2}^{0\nu}(^{136}\rm{Xe}) > 7 \times 10^{25} \ \rm{year}$
+	 を目指す\cite{NEXT}。
+	
+	\item EXO-200,1000 \\
+	EXO(Enriched Xenon Observatory)-200実験は、約80\% に濃縮された液体$^{136}$Xeを\SI{200}{kg}を用いた実験である。
+	米国ニューメキシコ州にある核廃棄物隔離施設の地下実験施設ある。
+	半減期 $T_{1/2}^{0\nu}(^{136}\rm{Xe}) > 1.9 \times 10^{25} \ \rm{year}$
+	が得られている\cite{EXO}。
+	
+	\item KamLAND-Zen \\
+	KamLAND-Zen(Kamioka Liquid Scintillator Anti-Neutrino Detector-Zero neutrino double beta decay search)実験は
+	神岡鉱山地下実験施設の100トン液体シンチレータを用いた低放射能環境における実験である。
+	バルーンの中に、天然存在比8.9\% の$^{136}$Xeを90\% に濃縮させ、
+	液体シンチレータの中に溶かして導入する手法を用いている。
+	これまでの研究により、$T_{1/2}^{0\nu}>1.07\times10^{26}\ \rm{year}$といy世界最高の測定結果を報告している\cite{KamLAND-Zen-result}。
+	将来計画として、\SI{1000}{kg}の$^{136}$Xeを用いたKamLAND2-Zenがあり、
+	有効質量 $< m_{\beta\beta} > < \SI{200}{meV}$を目指す。
+	KamLAND2-Zenに移行する中段階として\SI{800}{kg}の$^{136}$Xeを用いた計画があり、
+	そこでは$< m_{\beta\beta} > < \SI{30}{meV} \sim \SI{40}{meV}$が達成できると見積もっている\cite{KamLAND-Zen}。
+	
+\end{itemize}
+
+
+
+
+\chapter{検出器}
+
+
+
+
+\section{概要}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-TypesOfDetector.png}
+	\caption{ニュートリノを伴わない二重$\beta$崩壊探索のための検出器構造の例} \label{Fig-TyepseOfDetector}
+\end{figure}
+
+本研究では、Geant4を用いた粒子シミュレーションを用い、新しいいニュートリノを伴わない二重$\beta$崩壊探索実験の評価を行う。
+Geant4とは、素粒子が物質中を通過するときの相互作用過程をシミュレーションするソフトウェアである。
+
+今まで行われてきたニュートリノを伴わない二重$\beta$崩壊探索のための検出器構造は、大きく分けて2種類ある。
+一つは、図\ref{Fig-TyepseOfDetector}の(a)のように検出器がそのまま二重$\beta$崩壊するソースとなっているタイプがあり、
+もう一つは、(b)のように検出器とソースが分かれており、二重$\beta$崩壊したときの電子の軌跡を観測するタイプである。
+本研究で評価する検出器の設計では、では、検出器とソースが分かれているが、電子の軌跡を観測は行わず、単純に電子の運動エネルギーの和を観測することにより二重$\beta$崩壊を観測する。
+
+
+
+\section{Si半導体検出器}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-EnergyBandStructure.png}
+	\caption{(a)絶縁体,(b)半導体,(c)金属のエネルギーバンドの模式図\cite{TUS_text}} \label{Fig-SiliconSemiconductorDetector}
+\end{figure}
+
+物質は図\ref{Fig-SiliconSemiconductorDetector}のようにエネルギーバンドにおける電子の占有状態により、金属(metal)、半導体(semiconductor)または絶縁体(insulator)として分類される。
+エネルギーバンドには、電子の占めることが できないエネルギー領域があり、禁制帯(band gap)と呼ばれる。
+band gapを持つ物質中の電子は、価電子帯に存在し、エネルギーを与えると伝導帯に励起される。
+電子が励起されることにより物質は電気伝導性を示す。
+
+半導体検出器は、放射線が通過すると電子正孔対が生成し電気伝導性を示す。
+すなわち、検出器に入射した放射線が検出器内で損失したエネルギーを電子正孔対により検出することができる。
+半導体検出器は、他の放射線検出器に比べてエネルギー分解能が高く、放射能測定に広く用いられている。
+
+本研究ではSi半導体検出器を用いて、原子核が二重$\beta$崩壊する際に放出する2電子のエネルギー損失を測定する。
+Si半導体検出器は、図\ref{Fig-SiliconSemiconductorDetector}のように読み出し方法・読み出しブロック・読み出し位置で大きく分類される。
+シミュレーションでは、読み出し用にSi検出器にアルミニウム(以下Al)を用いているとし、\SI{0.01}{mm}のAl薄膜をSi検出器の両面に取り付ける。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-SiliconSemiconductorDetector.png}
+	\caption{Si半導体検出器の種類例\cite{hamamatsuHP}} \label{Fig-SiliconSemiconductorDetector}
+\end{figure}
+
+
+
+
+\section{同位体$^{82}$Se}
+
+セレン(Se)の同位体のうち天然に存在するものは6種類($^{74}$Se,$^{76}$Se,$^{77}$Se,$^{78}$Se,$^{80}$Se,$^{82}$Se)あり、そのうち$^{74}$Se,$^{76}$Se,$^{77}$Se,$^{78}$Se,$^{80}$Seは安定同位体である。不安定同位体は23種見つかっており、その例を表\ref{Tab-SeIsotope}に示す。ここでECは電子捕獲による崩壊、$\gamma$は$\gamma$崩壊、$\beta$は$\beta$崩壊、そして $\beta\beta$は二重 $\beta$崩壊を表す。本実験においては、自然に存在する二重$\beta$崩壊核種である$^{82}$Seを崩壊ソースとして用いる。
+
+\begin{table}[H] 
+	\center
+	\caption{Se同位体の不安定同位体の例} \label{Tab-SeIsotope}
+	\begin{tabular}{ccccc}
+		\hline
+		同位体核種 & N & Decay Mode & $T_{1/2}$ & Decay Energy \\
+		\hline
+		$^{72}$Se & 38 & EC/$\gamma$ & \SI{8.4}{day} & - / \SI{0.046}{MeV} \\
+		$^{75}$Se & 41 & EC/$\gamma$ & \SI{119.779}{day}  & - / \SI{0.264}{MeV}, \SI{0.136}{MeV}, \SI{0.279}{MeV} \\
+		$^{79}$Se & 45 & $\beta$ & $3.27\times10^{5}\ \rm{year}$ & \SI{0.151}{MeV} \\
+		$^{82}$Se & 48 & $\beta\beta$ & $1.08\times10^{20}\ \rm{year}$ & \SI{2.995}{MeV} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+
+
+\section{ニュートリノを伴わない二重$\beta$崩壊探索のためのレイヤー構造検出器}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-LayerDetector.png}
+	\caption{レイヤー構造Si検出器の概念図} \label{Fig-LayerDetector}
+\end{figure}
+
+本研究では、Si検出器と二重$\beta$崩壊する$^{82}$Seのソースの組み合わせを\SI{1}{Layer}とし、\SI{100}{Layer}重ねるレイヤー構造の検出器を考える(図\ref{Fig-LayerDetector}参照)。ここでこのレイヤー構造Si検出器を構成する要素について、Si半導体検出器の厚みを$l_{\rm{Si}}$、$^{82}$Seソースの厚みを$l_{\rm{Se}}$、それらの面積を$D_{xy}$、Si検出器と$^{82}$Seソースの間隔を$d$とする。
+
+二重$\beta$崩壊によって放出される電子の運動エネルギーを観測するため、$d$を小さく設定し、放出された電子をすぐSi検出器で捕獲する。
+また、$l_{\rm{Si}}$を薄く設定することで、環境$\gamma$線によるバックグラウンドを抑える。
+また、一般にSi半導体検出器は厚くすると、エネルギー分解能が悪くなるためできるだけ薄い方が$0\nu\beta\beta$と$2\nu\beta\beta$の識別がよくなる。
+ただ$l_{\rm{Si}}$を薄くするだけでは、二重$\beta$崩壊によって放出された電子もSi検出器をすぐ通過し、十分な運動エネルギーを得られない。
+そこで検出器に一定磁場をかけ、電子を磁場の影響により検出器内で円の軌跡を描かせることによって、何度かSi検出器を通過させる。
+これらの要素を組み合わせることにより、純粋な電子の運動エネルギー和を得ることを目指す。
+
+次章において、ニュートリノを伴わない二重$\beta$崩壊探索のためのレイヤー構造検出器の具体的な解析方法を説明する。
+
+
+
+\chapter{Si半導体検出器中での電子のエネルギー損失}
+
+
+
+\section{電子のエネルギー損失シミュレーションと検出効率}
+
+Geant4ソフトウェアを用い、Si検出器内での電子のエネルギー損失を見積もる。
+Genat4においてエネルギー損失は、Energy Depositといい、放出された電子が物質(Si検出器)内で相互作用ステップ毎で損失するエネルギー損失の和が得られる。
+
+$^{82}$Seは$Q=\SI{2.995}{MeV}$であるため、簡単のため二重$\beta$崩壊で放出される電子のエネルギーは$Q$値の半分の値\SI{1.5}{MeV}であると仮定をし、シミュレーションを行う。
+
+レイヤー構造Si検出器を1層あるときのEnergy Depositのヒストグラムを図\ref{Rslt-Layer1}に示す。シミュレーション時のそれぞれ変数においての設定値を表\ref{Tab-Layer1}に示す。
+
+\begin{table}[H] 
+	\center
+	\caption{レイヤ構造Si検出器1層のときのシミュレーション設定値} \label{Tab-Layer1}
+	\begin{tabular}{cc}
+		\hline
+		変数 & 設定値 \\
+		\hline
+		$B$ & \SI{1.0}{T} \\
+		$d$ & \SI{1.0}{mm} \\
+		$l_{\rm{Si}}$ & \SI{1.0}{mm} \\
+		$l_{\rm{Se}}$ & \SI{0.01}{mm} \\
+		$D_{xy}$ & $100\times100\ \rm{cm}^2$ \\
+	\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Rslt-Layer1.png}
+	\caption{レイヤー構造Si検出器1層のときのEnergy Depositのヒストグラム} \label{Rslt-Layer1}
+\end{figure}
+
+観測されたEnergy Depositのヒストグラムから、レイヤー構造Si検出器において二重$\beta$崩壊によって放出された電子が観測されたと決定するための効率Efficiencyを下記のように設定する。
+\begin{equation}
+	\rm{Efficiency}=\frac{\SI{1.25}{MeV} \text{から} \SI{1.75}{MeV}\text{間のEnergy Depositの粒子数}}{\text{入射粒子数}}
+\end{equation}
+
+
+
+
+\section{Si半導体検出器の評価}
+
+レイヤー構造Si検出器に用いるSi半導体検出器に電子が入射した時のEnergy Depositを評価するため、3種類のSi半導体検出器の依存性をシミュレーションする。
+
+
+
+
+\subsection{Si半導体検出器の厚み依存性による評価}
+
+Si半導体検出器の厚み$l_{\rm{Si}}$を\SI{0.5}{mm}から\SI{4.0}{mm}まで\SI{0.5}{mm}間隔で変化させ、それぞれ厚みでEnergy Depositを見積もった。
+レイヤー構造Si検出器のそれぞれの変数を図\ref{Fig-SiDetector-Thickness}のように設定した。
+電子の初期エネルギーを\SI{1.5}{MeV}、初期Event数を1000とし、Si半導体検出器から\SI{1.0}{mm}離れた位置からSi半導体検出器の面に対し直角に入射させた。
+ここで、Si半導体検出器のみの検出効率を観測するため、読み出し用Al薄膜は取り付けていない。
+それぞれの厚みにおいてのヒストグラムを作成し、効率Efficiencyと$l_{\rm{Si}}$のグラフを作成した。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-SiDetector-Thickness.png}
+	\caption{Si半導体検出器の厚み依存性の概念図} \label{Fig-SiDetector-Thickness}
+\end{figure}
+
+
+
+
+\subsection{Si半導体検出器の厚み依存性の結果}
+
+図\ref{Rslt-SiDetector-Thickness-Efficiency}にSi半導体検出器の効率Effciencyと厚み$l_{\rm{Si}}$の結果を示す。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Rslt-SiDetector-Thickness-Efficiency.png}
+	\caption{Si半導体検出器の厚み依存性と効率} \label{Rslt-SiDetector-Thickness-Efficiency}
+\end{figure}
+
+厚みが厚くなるにつれてEfficiencyが大きくなっており、\SI{2.5}{mm}以上で値が一定値に近くなっていることが分かる。
+厚い方が、電子がSi半導体検出器内を通過する距離が長くなるためEnergy Depositが初期エネルギー値に近くなる。
+\SI{2.5}{mm}以上で一定値を取ったということは、電子のSi半導体検出器での飛距離が平均\SI{2.5}{mm}程度であることを意味する。
+レイヤー構造Si検出器を実際に用いる際は、磁場をかけSi半導体検出器を通過してしまった粒子を再度同一検出器入射させるため、Si半導体検出器は\SI{2.5}{mm}より薄くて良いことがわかる。
+
+図\ref{Rslt-SiDetector-Thickness-Histgram}にSi半導体検出器の厚み依存性のヒストグラムをそれぞれの厚みでプロットした結果を示す。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=15.5cm]{Rslt-SiDetector-Thickness-Histgram.png}
+	\caption{Si半導体検出器の厚み依存性のヒストグラム} \label{Rslt-SiDetector-Thickness-Histgram}
+\end{figure}
+
+
+
+
+\subsection{Si半導体検出器の角度依存性による評価}
+
+電子がSi半導体検出器の面に対し直角に入射している時の角度を$0^{\circ}$とし$10^{\circ}$間隔で$80^{\circ}$まで変化させ、それぞれの角度でEnergy Depositを比較した。
+ 図\ref{Fig-SiDetector-Angle}のようにそれぞれの変数を設定した。
+電子の初期エネルギーを\SI{1.5}{MeV}、初期Event数を1000とし、Si半導体検出器から\SI{1.0}{mm}離れた位置から入射させた。
+ここで、 Si半導体検出器のみの検出効率を観測するため、読み出し用Al薄膜は取り付けていない。
+それぞれの角度においてのヒストグラムを作成し、効率Efficiencyと角度$\theta$のグラフを作成した。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-SiDetector-Angle.png}
+	\caption{Si半導体検出器の角度依存性の概念図} \label{Fig-SiDetector-Angle}
+\end{figure}
+
+
+
+\subsection{Si半導体検出器の角度依存性の結果}
+
+図\ref{Rslt-SiDetector-Angle-Efficiency}にSi半導体検出器の効率Effciencyと角度Angleの結果を示す。
+	
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Rslt-SiDetector-Angle-Efficiency.png}
+	\caption{Si半導体検出器の角度依存性と効率} \label{Rslt-SiDetector-Angle-Efficiency}
+\end{figure}
+
+角度$60^{\circ}$で最も良いEfficiencyを得られた。
+Si半導体検出器への入射角が鋭い方が、電子がSi半導体検出器内を通過する距離が長くなるためEnergy Depositが初期エネルギー値に近くなる。
+また、電子はSi半導体検出器で跳ね返ってしまい、検出器に入らない場合も考えられる。
+角度が鋭くなりすぎるとSi半導体検出器に入らず反射した電子が多くなったため、$60^{\circ}$より大きい角度ではEfficiencyが減少したと考える。
+
+図\ref{Rslt-SiDetector-Angle-Histgram1}、図\ref{Rslt-SiDetector-Angle-Histgram2}にSi半導体検出器の角度依存性のヒストグラムをそれぞれの角度でプロットした結果を示す。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=15.5cm]{Rslt-SiDetector-Angle-Histgram1.png}
+	\caption{Si半導体検出器の厚み依存性のヒストグラム($0^{\circ}$から$50^{\circ}$)} \label{Rslt-SiDetector-Angle-Histgram1}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=15.5cm]{Rslt-SiDetector-Angle-Histgram2.png}
+	\caption{Si半導体検出器の角度依存性のヒストグラム($60^{\circ}$から$80^{\circ}$)} \label{Rslt-SiDetector-Angle-Histgram2}
+\end{figure}
+
+
+
+	
+\subsection{読み出し用Al薄膜による依存性による評価}
+
+読み出し用Al薄膜をSi半導体検出器に取り付けたときと、取り付けていないときのEnergy Depositの変化を観測する。
+厚み\SI{0.01}{mm}のAlの薄膜を取り付けたときを考える。
+初期粒子の位置$d=\SI{1.0}{mm}$、Si半導体検出器の厚み$l_{\rm{Si}}=\SI{1.0}{mm}$としてEnergy Depositを比較した。
+ここで、初期電子のエネルギーを\SI{1.5}{MeV}、Event数を1000とした。
+それぞれ膜ありと膜なしでヒストグラムを作成し、効率Efficiencyを出した。
+
+
+
+
+\subsection{読み出し用Al薄膜による依存性の結果}
+
+\SI{0.01}{mm}の厚みの読み出し用Al薄膜をSi検出器に取り付けた時の依存性を見るため、表\ref{Tab-SiDetector-Film-Efficiency}に効率をまとめた。
+
+\begin{table}[H] 
+	\center
+	\caption{読み出し用Al薄膜による効率} \label{Tab-SiDetector-Film-Efficiency}
+	\begin{tabular}{cc}
+		\hline
+		 & Efficiency \\
+		\hline
+		Al薄膜なし & 0.177 \\
+		Al薄膜あり & 0.085 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+薄膜なしの方が、Efficiencyが高くなった。
+Si半導体検出器に膜があると、電子が膜で反射し、電子がSi半導体検出器に入射する数が減る。
+また、Si半導体検出器に入射しても膜で散乱しEnergyを失ったためEnergy Depositが小さくなった。
+よって、Efficiencyが下がったと考えられる。
+
+図\ref{Rslt-SiDetector-Film-Histgram}に読み出し用Al薄膜のある場合とない場合のヒストグラムをプロットした。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=15.5cm]{Rslt-SiDetector-Film-Histgram.png}
+	\caption{読み出し用Al薄膜による依存性のヒストグラム} \label{Rslt-SiDetector-Film-Histgram}
+\end{figure}
+
+
+
+
+\chapter{レイヤー構造Si検出器の評価}
+
+
+
+
+\section{検出器構造の評価}
+
+レイヤー構造Si検出器の性能を評価するため、下記の依存性をシミュレーションによって評価した。
+
+\begin{enumerate}
+	\item Si検出器厚み依存性 \\
+	Si検出器の厚みによって捕獲できる電子のエネルギー和が変わる。
+	二重$\beta$崩壊による電子のエネルギーを多く、環境放射線による電子のエネルギーを少なくできる厚みを決定するために行う。
+	
+	\item 電子の初期位置依存性 \\
+	電子の初期位置、つまりSi検出器と$^{82}$Seソースの間$d$の依存性を測定する。
+	レイヤー構造Si検出器の1層毎の幅を決定するために行う。
+	検出器内が磁場なし真空状態であれば、二重$\beta$崩壊によって出てきた電子は直進し、そのままSi検出器に入る。
+	本実験では、環境放射線の影響を考え、磁場をかけているため電子は直進せず螺旋を描く。
+	よって、初期位置の依存性は磁場の影響によって変化する事が予測される。
+	
+	\item 磁場依存性 \\
+	磁場の影響で電子の軌道が変わることによるEnergy Depositの変化を見る。
+	電子のエネルギーをより多く捕獲するための適切な磁場を決定するために行う。
+\end{enumerate}
+
+これらの依存性を見るための変数とその設定値を表\ref{Tab-Dpendence}に示す。
+
+磁場$B$は、磁場がある状態とない状態の依存性と、磁場の大きさによる依存性を見るために、3つのパターンでのシミュレーションを行う。
+Si検出器と$^{82}$Seの間$d$を大きくしすぎると実際のレイヤー構造Si検出器は、磁場をかけた状態を想定するため電子がSi半導体検出器まで届かなくなる。
+また、Si検出器の厚み$l_{\rm{Si}}$は、環境$\gamma$線の影響を出来るだけ排除するため、薄いものを考える。
+したがって、$d$と$l_{\rm{Si}}$は小さいことが前提として2つのパターンで考える。
+
+変数$l_{\rm{Se}} = \SI{0.01}{mm}$,$D_{xy} =100\times100\ \rm{cm}^2$は固定する。
+初期粒子は50層目(中心)から一方向に向けて角度と発生点を$^{82}$Seソース上でRandomに発生させた。
+今回はLayerの番号50から番号が増えていく方向へ向けて電子を発生させている。
+初期粒子のエネルギーは\SI{1.5}{MeV}で固定した。
+この変数でのシミュレーションをレイヤー構造Si検出器で行う。
+
+解析としては、以下のグラフを作成した。
+
+\begin{enumerate}
+	\item レイヤー構造Si検出器全体のEnergy Deposit のヒストグラム。
+	\item  Layer毎に\SI{0.25}{MeV}間隔のしきい値に落ちた数を Count し、Layerを横軸、Energy Deposit縦軸での Color map。
+	\item レイヤー毎のEfficiencyのグラフ。
+\end{enumerate}
+
+\begin{table}[H] 
+	\center
+	\caption{レイヤ構造Si検出器性能評価シミュレーション設定値} \label{Tab-Dpendence}
+	\begin{tabular}{cccc}
+		\hline
+		変数 & 設定値  \\
+		\hline
+		$l_{\rm{Si}}$ &  \SI{0.5}{mm} & \SI{1.0}{mm} & \\
+		$d$ & \SI{0.5}{mm} & \SI{1.0}{mm} & \\
+		$B$ & \SI{0.0}{T} & \SI{0.5}{T} & \SI{1.0}{T} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-Dependence.png}
+	\caption{Si検出器厚み依存性・電子の初期依存性・磁場依存性シミュレーション概念図} \label{Fig-Dependence}
+\end{figure}
+
+
+
+
+\section{検出器構造の評価の結果}
+
+はじめに、各設定値ごとにシミュレーションを行った結果を示す。
+全レイヤーのTotal Energy Depositの和におけるヒストグラムを図\ref{Rslt-LayerDetector-Si05_d05_B00-TotalHisto}から図\ref{Rslt-LayerDetector-Si10_d10_B10-TotalHisto}プロットした。
+縦軸は対数をとった。
+本シミュレーションでの設定値を表\ref{Tab-LayerDetectorDpendence}に示す。
+
+\begin{table}[H] 
+	\center
+	\caption{レイヤ構造Si検出器性能評価と電子・$\gamma$線識別のシミュレーション設定値} \label{Tab-LayerDetectorDpendence}
+	\begin{tabular}{|cc||c|cc|}
+		\hline
+		変数 & 設定値 & & Electron & Gamma\\
+		\hline
+		$l_{\rm{Si}}$ &  \SI{0.5}{mm}, \SI{1.0}{mm} &Event数 & 1000 & 100000 \\ 
+		$d$ & \SI{0.5}{mm}, \SI{1.0}{mm} & 初期エネルギー &
+		 \SI{1.5}{MeV} & \SI{1.5}{MeV}$\sim$\SI{3.0}{MeV}\ Random \\
+		$B$ & \SI{0.0}{T}, \SI{0.5}{T}, \SI{1.0}{T} & 初期位置 & \SI{50}{Layer} & \SI{50}{Layer} \\
+		$D_{xy}$ & $100\times100\ \rm{cm}^2$ & 初期運動方向 & 
+		角度$0^{\circ}\sim180^{\circ}$Random & 角度$0^{\circ}\sim180^{\circ}$Random \\
+		$l_{\rm{Se}}$ & \SI{0.01}{mm} & & & \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d05_B00-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{0.5}{mm}, B=\SI{0.0}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si05_d05_B00-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d05_B05-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{0.5}{mm}, B=\SI{0.5}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si05_d05_B05-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d05_B10-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{0.5}{mm}, B=\SI{1.0}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si05_d05_B10-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d10_B00-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{1.0}{mm}, B=\SI{0.0}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si05_d10_B00-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d10_B05-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{1.0}{mm}, B=\SI{0.5}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si05_d10_B05-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d10_B10-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{1.0}{mm}, B=\SI{1.0}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si05_d10_B10-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d05_B00-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{0.5}{mm}, B=\SI{0.0}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si10_d05_B00-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d05_B05-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{0.5}{mm}, B=\SI{0.5}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si10_d05_B05-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d05_B10-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{0.5}{mm}, B=\SI{1.0}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si10_d05_B10-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d10_B00-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{0.0}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si10_d10_B00-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d10_B05-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{0.5}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si10_d10_B05-TotalHisto}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d10_B10-TotalHisto.png}
+	\caption{ElectronとGammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{1.0}{T}$の設定値におけるTotal Energy Depositのヒストグラム}
+	\label{Rslt-LayerDetector-Si10_d10_B10-TotalHisto}
+\end{figure}
+
+次に、Layer毎に\SI{0.25}{MeV}間隔のしきい値に落ちたCount数とLayerとEnergy DepositをColor mapにプロットした。
+結果を図\ref{Rslt-LayerDetector-Si05_d05_B00-Cmap}から図\ref{Rslt-LayerDetector-Si05_d05_B00-Cmap}に示す。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d05_B00-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{0.5}{mm}, B=\SI{0.0}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si05_d05_B00-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d05_B05-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{0.5}{mm}, B=\SI{0.5}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si05_d05_B05-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d05_B10-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{0.5}{mm}, B=\SI{1.0}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si05_d05_B10-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d10_B00-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{1.0}{mm}, B=\SI{0.0}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si05_d10_B00-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d10_B05-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{1.0}{mm}, B=\SI{0.5}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si05_d10_B05-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d10_B10-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{1.0}{mm}, B=\SI{1.0}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si05_d10_B10-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d05_B00-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{0.5}{mm}, B=\SI{0.0}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si10_d05_B00-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d05_B05-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{0.5}{mm}, B=\SI{0.5}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si10_d05_B05-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d05_B10-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{0.5}{mm}, B=\SI{1.0}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si10_d05_B10-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d10_B00-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{0.0}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si10_d10_B00-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d10_B05-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{0.5}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si10_d10_B05-Cmap}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d10_B10-Cmap.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{1.0}{T}$の設定値におけるColor map}
+	\label{Rslt-LayerDetector-Si10_d10_B10-Cmap}
+\end{figure}
+
+図\ref{Rslt-LayerDetector-Si05_d05_B00-Cmap}から図\ref{Rslt-LayerDetector-Si05_d05_B00-Cmap}のColor mapからレイヤー構造Si検出器でのLayer毎のEnergy Depositの分布がわかる。
+電子は初期位置にピークが立ち、$\gamma$線は放射方向に一様に分布をしている。
+電子のColor mapでは、磁場をかけるとEnergy Depositの値が大きいところに落ちている電子が多くなっていることがわかる。
+また、Si半導体検出器の厚み$l_{\rm{Si}}$が厚くなるとピークが鋭くなっている。
+すなわち、Efficiency\SI{1.25}{MeV}から\SI{1.25}{MeV}間のEnergy Depositが観測されるLayer数が減っている。
+$\gamma$線では広くEfficiencyの間のEnergy Depositが観測されているため、電子と$\gamma$線での識別がLayerの分布によってできることがわかる。
+
+次に各LayerのEfficiencyを求め、各LayerにおけるEfficiencyをグラフを図\ref{Rslt-LayerDetector-Si05_d05_B00-Efficiency}から図\ref{Rslt-LayerDetector-Si10_d10_B10-Efficiency}にプロットした。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d05_B00-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{0.5}{mm}, B=\SI{0.0}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si05_d05_B00-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d05_B05-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{0.5}{mm}, B=\SI{0.5}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si05_d05_B05-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d05_B10-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{0.5}{mm}, B=\SI{1.0}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si05_d05_B10-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d10_B00-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{1.0}{mm}, B=\SI{0.0}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si05_d10_B00-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d10_B05-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{1.0}{mm}, B=\SI{0.5}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si05_d10_B05-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si05_d10_B10-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{0.5}{mm}, d=\SI{1.0}{mm}, B=\SI{1.0}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si05_d10_B10-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d05_B00-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{0.5}{mm}, B=\SI{0.0}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si10_d05_B00-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d05_B05-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{0.5}{mm}, B=\SI{0.5}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si10_d05_B05-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d05_B10-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{0.5}{mm}, B=\SI{1.0}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si10_d05_B10-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d10_B00-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{0.0}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si10_d10_B00-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d10_B05-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{0.5}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si10_d10_B05-Efficiency}
+\end{figure}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-LayerDetector-Si10_d10_B10-Efficiency.png}
+	\caption{(a)electron(b)gammaの$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{1.0}{T}$の設定値における各LayerのEfficiency}
+	\label{Rslt-LayerDetector-Si10_d10_B10-Efficiency}
+\end{figure}
+
+Energy DepositとLayerのColor map同様、Efficiencyの分布も電子はピークをもち、$\gamma$線は放射方向に連続的に分布していることが分かる。
+Efficiencyの値を比べると、電子が放出されたときのEfficiencyの方が大きい。
+電子と$\gamma$線が同時に発生した場合、優位的に観測されるのは電子である。
+
+以上の結果から、レイヤー構造検出器を構成する要素の設定値として、適切な値を考える。
+
+図\ref{Rslt-LayerDetector-Si05_d05_B00-Cmap}から図\ref{Rslt-LayerDetector-Si10_d10_B10-Cmap}のColor mapを見ると、電子の場合は、放出させたLayer(50層目)でピークが立っていることが分かる。
+$\gamma$線の場合は、放出させた方向に連続的に分布していることが分かる。
+
+電子のColor mapにおけるピークの特徴を見ていく。
+Si半導体検出器の厚み$l_{\rm{Si}}$が大きい場合は、ピークが鋭くなる。
+これは、1枚のSi半導体検出器で電子が失うエネルギーが大きくなるため、電子が進むLayerが少なくなるからである。
+ここで$\gamma$線におけるColor mapを見ると、連続的に分布している。
+したがって、電子が滑らかなピークを持つと$\gamma$線との識別が難しくなるため、電子はSi半導体検出器の厚みは\SI{1.0}{mm}が良い。
+また、$^{82}$SeとSi半導体検出器の間$d$の間を大きくすることでも、電子の進む距離が長くなるため、ピークが鋭くなると考える。
+次に磁場$B$におけるピークの特徴を見ると、磁場が大きい方がピークのうちEnergy Depositが大きいCount数が多くなっている。
+これは図\ref{Rslt-LayerDetector-Si05_d05_B00-Efficiency}から図\ref{Rslt-LayerDetector-Si10_d10_B10-Efficiency}の各LayerのEfficiencyの値から明らかである。
+Efficiencyは\SI{1.25}{MeV}から\SI{1.75}{MeV}の間のEnergy Depositの数で決めているため、Efficiencyの値が大きい場合、Energy Depositの値が大きいCount数が多い。
+に入る電子の数を多くし、$\gamma$線と識別をしていく。
+したがって今回行ったシミュレーションの中で磁場は\SI{1.0}{T}が良い。
+
+上記の考察から、次節以降のシミュレーションにおけるレイヤー構造Si検出器は、$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{1.0}{T}$を設定値として用いる。
+
+
+
+
+\chapter{電子・$\gamma$線の識別}
+
+
+
+
+\section{電子・$\gamma$線の識別方法}
+
+本研究では、電子がSi検出器で損失したエネルギーを測定し、二重$\beta$崩壊を探索する手法をとっている。
+ここで、環境$\gamma$線による二重$\beta$崩壊するソース以外からの影響を考える必要がある。
+$\gamma$線と物質の相互作用には光電効果、コンプトン散乱、電子対生成等がある。
+
+\begin{itemize}
+	\item 光電効果 \\
+	光電効果とは、$\gamma$線が物質に入射したとき、原子内の束縛されている電子に全エネルギーを渡し、
+	電子が原子から飛び出す現象のことである。
+	図\ref{Fig-Interaction}(a)参照。
+	
+	\item コンプトン散乱 \\
+	コンプトン散乱とは、$\gamma$線が原子内の自由電子に衝突することにより、
+	$\gamma$線はエネルギーの一部を失うことによって波長が長くなり散乱され、電子が飛び出す現象。
+	図\ref{Fig-Interaction}(b)参照。
+	
+	\item 電子対生成 \\
+	電子対生成は、$\gamma$線が\SI{1.02}{MeV}より大きい場合、$\gamma$線が原子核近傍で消滅し、
+	陽電子・電子対を生成させる現象である。
+	図\ref{Fig-Interaction}(c)参照。
+\end{itemize}
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-Interaction.png}
+	\caption{(a)光電効果(b)コンプトン散乱(c)電子対生成の概念図} \label{Fig-Interaction}
+\end{figure}
+
+上記の相互作用を考慮し、$\gamma$線がレイヤー構造Si検出器を通過したときの概念図を図\ref{Fig-Electron-Gamma}に示す。
+二重$\beta$崩壊による電子は、1枚の$^{82}$Seソースのみから電子が放出され、Si検出器のHitは100層の中で連続して現れる。
+ここでHitとはEfficiency値の評価によって決まる。
+$\gamma$線による電子は、散乱後も検出器内を進み、非連続的にHitを出すと考えられる。
+レイヤー構造Si検出器における電子と$\gamma$線のHitの現れ方の違いからそれぞれの識別を行う。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=10cm]{Fig-Electron-Gamma.png}
+	\caption{(a)Electron(b)Gammaのレイヤー構造Si検出器でのシミュレーション概念図} \label{Fig-Electron-Gamma}
+\end{figure}
+
+シミュレーションでは、Event毎に各Layerに落ちたEnergy Depositの比較を行った。
+そこで、1Event中で最も大きいEnergy Depositを観測したLayerでのEnergy Depositの大きさを$E_1$、次に大きなEnergy Depositを観測したLayerでのEnergy Depositの大きさを$E_2$とする。
+また、1Eventでの全LayerのTotal Energy Depositを$E_{\rm{total}}$とする。
+
+これら$E_1,E_2,E_{total}$を用い、電子が放出された場合のレイヤー構造Si検出器での振る舞いかたを特徴付ける。
+電子は各LayerにおいてHitが連続分布を持ち、かつ$E_1$と$E_2$のEnergy Depositの和がほぼ$E_{\rm{total}}$に等しくなると考える。
+したがって、電子の場合、比$E_1/E_{\rm{total}}$を取った時に値は1に近くなり、$\gamma$線の場合、Energy DepositがLayerで散布されるため比の値は小さくなると考えられる。
+$E_1,E_2$の関係は、電子の場合、ほとんどが隣り合っていると考えられ、$\gamma$はLayer層でRandomに分布すると考えられる。
+
+下記のグラフをプロットをし、電子と$\gamma$線の比較を行う。
+
+\begin{enumerate}
+	\item 比$E_1/E_2$を求め、そのCount数のヒストグラム。
+	\item $E_1$と$E_2$のColor map。
+	\item 比$E_1/E_{\rm{total}}$を求め、そのCount数のヒストグラム。
+	\item 比$E_2/E_{\rm{total}}$を求め、そのCount数のヒストグラム。
+\end{enumerate}
+
+また、Layerでの振る舞いを見る条件として、以下の2つの条件を与える。
+それぞれのしきい値は、比の値が0.80,0.85,0.90,0.95以上の4種類の場合を考える。
+
+\begin{enumerate}
+	\item[条件1.] 比$E_1/E_{\rm{total}}$の値が各しきい値内に入る割合。
+	\item[条件2.] $E_1,E_2$が隣り合う場合において、$E_1,E_2$の和をとり、その比$(E_1+E_2)/E_{\rm{total}}$が各しきい値内に入る割合。
+\end{enumerate}
+
+解析としては、Event毎に条件1,2に当てはまるEvent数をCountし、条件における比がしきい値内に入っている割合を出した。
+今回はしきい値を4種類与え、それぞれの条件における割合を電子と$\gamma$線で比較を行う。
+
+また、上記の条件ではEfficiencyを考慮していない。
+Efficiencyでのカットをかけた場合におけるそれぞれの条件でしきい値内に入る割合も見ていく。
+Effciencyでのカットとは、1Event中で最もEnergy Deposit（$E_1$）が\SI{1.25}{MeV}から\SI{1.75}{MeV}に入っているEventのみで上記の条件1,2を考えそれぞれの割合を出すことである。
+このEfficiencyでのカットをかけた場合でのグラフもプロットをし、割合をそれぞれ求めた。
+
+上記の識別を行う上で、簡単のため二重$\beta$崩壊で出てくる電子はレイヤー構造Si検出器の中心(50層目)の$^{82}$Seソースからのみとした。
+レイヤー構造Si検出器の評価のときと同様に、変数$l_{\rm{Se}} = \SI{0.01}{mm}$,$D_{xy} =100\times100\ \rm{cm}^2$は固定し、初期粒子は50層目(中心)から一方向に向けて角度と発生点を$^{82}$Seソース上でRandomに発生させた。
+前節における検出器の評価から決定した値$l_{\rm{Si}}=\SI{1.0}{mm}, d=\SI{1.0}{mm}, B=\SI{1.0}{T}$を用いる。
+初期粒子のEnergyは電子が\SI{1.5}{MeV}、$\gamma$線は$\SI{1.0}{MeV}\sim\SI{3.0}{MeV}$でRandomに発生させた。
+また、初期粒子数は電子が1000Event、$\gamma$線は1000Eventとする。
+
+
+これらの識別手法を電子と$\gamma$線で比較を行い、識別の良い条件を探る。
+識別の良い条件において電子を1000Event、検出器内にRandomに生成し、電子と識別される割合と$\gamma$線と識別される割合を出した。
+
+
+
+
+
+\section{電子・$\gamma$線の識別の結果}
+
+電子・$\gamma$線の識別シミュレーションにおける設定値を表\ref{Tab-ElectronGamma-Settei}に示す。
+
+\begin{table}[H] 
+	\center
+	\caption{電子・$\gamma$線の識別シミュレーションにおける設定値} \label{Tab-ElectronGamma-Settei}
+	\begin{tabular}{cc}
+	\hline
+	 & Event数 \\
+	 \hline
+	Electron & 1000 \\
+	Gamma & 1000 \\
+	\hline
+	変数 & 設定値 \\
+	\hline
+	$l_{\rm{Si}}$ & \SI{1.0}{mm} \\
+	$d$ & \SI{1.0}{mm} \\
+	$B$ & \SI{1.0}{T} \\
+	\hline
+	\end{tabular}
+\end{table}
+
+図\ref{Rslt-ElectronGamma-electron}に電子の比$E_1/E_2,E_1/E_{\rm{total}},E_2/E_{\rm{total}}$のヒストグラムと$E_1,E_2$のColor mapを示す。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-ElectronGamma-electron.png}
+	\caption{Electronの比$E_1/E_2,E_1/E_{\rm{total}},E_2/E_{\rm{total}}$のヒストグラムと$E_1,E_2$のColor map}
+	\label{Rslt-ElectronGamma-electron}
+\end{figure}
+
+次に、図\ref{Rslt-ElectronGamma-gamma}に$\gamma$線の比$E_1/E_2,E_1/E_{\rm{total}},E_2/E_{\rm{total}}$のヒストグラムと$E_1,E_2$のColor mapを示す。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-ElectronGamma-gamma.png}
+	\caption{Gammaの比$E_1/E_2,E_1/E_{\rm{total}},E_2/E_{\rm{total}}$のヒストグラムと$E_1,E_2$のColor map}
+	\label{Rslt-ElectronGamma-gamma}
+\end{figure}
+
+図\ref{Rslt-ElectronGamma-electron}と図\ref{Rslt-ElectronGamma-gamma}を見ると、比$E_1/E_2$と比$E_1/E_{\rm{total}}$のヒストグラムから最もEnergy Depositが大きいLayerにEnergy Depositが集中していることがわかる。
+$\gamma$線はEventのほとんどが$E_1=\SI{0}{MeV}$が多いためEnergy Depositが観測されず、観測されるのは初期Energyが大きいものだけである。
+図\ref{Rslt-ElectronGamma-electron}と図\ref{Rslt-ElectronGamma-gamma}において電子と$\gamma$線において比のヒストグラムの形が似ている特徴を持つことから、初期Energy Depositが大きい$\gamma$線は電子との識別が難しいことがわかる。
+
+各しきい値における比$E_1/E_{\rm{total}}$と$(E_1+E_2)/E_{\rm{total}}$の割合を表\ref{Tab-82SeDoubleDecayTable}にまとめた。
+電子と$\gamma$線を比較すると条件1の場合では、電子も$\gamma$線も割合が\SI{50}{\%}未満でしきい値としての識別が難しい。
+条件2の場合は電子は割合が大きくなり、$\gamma$線は\SI{50}{\%}未満である。
+条件2の方は$E_1$と$E_2$が隣あっている場合という条件を課しているため、さらに厳しい条件となっている。
+図\ref{Fig-Electron-Gamma}の概念図のように、電子では$E_1,E_2$が隣り合っているという条件に当てはまるものが多く、1Eventで観測されるEnergy Depositのほとんどが$E_1,E_2$にまとまっていると考えられる。
+よって、電子の割合が大きくなり、電子と$\gamma$線の識別効率が良くなる。
+
+\begin{table}[H]
+	\center
+	\caption{各しきい値における比$E_1/E_{\rm{total}}$と$(E_1+E_2)/E_{\rm{total}}$の割合} \label{Tab-82SeDoubleDecayTable}
+	\begin{tabular}{c|cc|cc}
+		\hline
+		 & Electron &  & Gamma &  \\
+		しきい値 & 条件1($E_1/E_{\rm{total}}$) & 条件2($E_1+E_2/E_{\rm{total}}$) & 条件1($E_1/E_{\rm{total}}$) & 条件2($E_1+E_2/E_{\rm{total}}$)\\
+		\hline
+		比の値\ 0.80以上 & \SI{34.8}{\%} & \SI{89.0}{\%} & \SI{21.0}{\%} & \SI{36.6}{\%} \\
+		比の値\ 0.85以上 & \SI{29.6}{\%} & \SI{88.2}{\%} & \SI{17.9}{\%} & \SI{33.6}{\%} \\
+		比の値\ 0.90以上 & \SI{27.0}{\%} & \SI{87.5}{\%} & \SI{16.0}{\%} & \SI{27.3}{\%} \\
+		比の値\ 0.95以上 & \SI{23.9}{\%} & \SI{86.8}{\%} & \SI{14.3}{\%} & \SI{23.1}{\%} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+次に、Efficiencyでカットをかけた場合の電子の比$E_1/E_2,E_1/E_{\rm{total}},E_2/E_{\rm{total}}$のヒストグラムと$E_1,E_2$のColor mapを図\ref{Rslt-ElectronGamma-electron_cut}示す。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-ElectronGamma-electron_cut.png}
+	\caption{Electronの比$E_1/E_2,E_1/E_{\rm{total}},E_2/E_{\rm{total}}$のヒストグラムと$E_1,E_2$のColor map}
+	\label{Rslt-ElectronGamma-electron_cut}
+\end{figure}
+
+次に、図\ref{Rslt-ElectronGamma-gamma_cut}に$\gamma$線のEfficiencyでカットをかけた場合における比$E_1/E_2,E_1/E_{\rm{total}},E_2/E_{\rm{total}}$のヒストグラムと$E_1,E_2$のColor mapを示す。
+
+\begin{figure}[H]
+	\center
+	\includegraphics[width=16.5cm]{Rslt-ElectronGamma-gamma_cut.png}
+	\caption{Gammaの比$E_1/E_2,E_1/E_{\rm{total}},E_2/E_{\rm{total}}$のヒストグラムと$E_1,E_2$のColor map}
+	\label{Rslt-ElectronGamma-gamma_cut}
+\end{figure}
+
+
+
+\begin{table}[H]
+	\center
+	\caption{Efficiencyでカットをかけた場合の各しきい値における比$E_1/E_{\rm{total}}$と$(E_1+E_2)/{\rm{total}}$の割合} \label{Tab-82SeDoubleDecayTable}
+	\begin{tabular}{c|cc|cc}
+		\hline
+		 & Electron &  & Gamma &  \\
+		しきい値 & 条件1($E_1/E_{\rm{total}}$) & 条件2($E_1+E_2/E_{\rm{total}}$) & 条件1($E_1/E_{\rm{total}}$) & 条件2($E_1+E_2/E_{\rm{total}}$)\\
+		\hline
+		比の値\ 0.80以上 & \SI{100.0}{\%} & \SI{100.0}{\%} & \SI{42.2}{\%} & \SI{85.7}{\%} \\
+		比の値\ 0.85以上 & \SI{100.0}{\%} & \SI{100.0}{\%} & \SI{33.3}{\%} & \SI{75.0}{\%} \\
+		比の値\ 0.90以上 & \SI{95.8}{\%}   & \SI{100.0}{\%} & \SI{25.0}{\%} & \SI{46.4}{\%} \\
+		比の値\ 0.95以上 & \SI{87.4}{\%}   & \SI{99.4}{\%}   & \SI{19.4}{\%} & \SI{35.7}{\%} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+
+\chapter*{まとめと将来展望}
+\addcontentsline{toc}{chapter}{まとめと将来展望}
+
+本研究では、ニュートリノを伴わない二重$\beta$崩壊探索のためSi半導体検出器と$^{82}$Seを用い、レイヤー構造を持つ検出器考え、シミュレーションを行った。
+検出器を構成する要素の依存性を解析することによるレイヤー構造Si検出器の性能評価を目的とした。
+ニュートリノを伴わない二重$\beta$崩壊モード$0\nu\beta\beta$を検出するためには、環境放射線の影響をなるべく排除し、クリーンな環境での検出が必要であると考え、磁場やSi半導体検出器の厚み、ソースとSi半導体検出器の間の依存性を解析した。
+環境放射線は$\gamma$線による影響が大きいと考え、$\gamma$線と電子の識別をすることによって、クリーンな実験を目指した。
+
+しかし、検出器を構成する要素を簡単にするため省略をしていることや、他の環境放射線などレイヤー構造Si検出器の性能を見積もる要素はまだある。
+そしてそれら解析を行えていないことから、本研究はレイヤー構造Si検出器の評価が十分とは言えない。
+
+ニュートリノを伴わない二重$\beta$崩壊探索のためのレイヤー構造Si検出器の将来展望としては、さらなる検出器の性能評価とニュートリノを伴わない二重$\beta$崩壊の寿命をシミュレーションを行うことが必要である。
+
+
+
+\chapter*{謝辞}
+\addcontentsline{toc}{chapter}{謝辞}
+\pagenumbering{roman}
+
+本論文を書くにあたり、多くの方にご指導・助言賜りましたことを心より感謝申し上げます。
+
+指導教官である石塚正基先生には研究面だけでなく進路・学業についてもご指導頂きました。ニュートリノや二重$\beta$崩壊の知識がない私に、参考となる論文をご紹介や、直接ご教授頂くなど大変お世話になりました。大学院進学の相談をさせて頂いた際には、面接時の注意事項や、試験への心構えなど助言いただきました。深く感謝申し上げます。
+
+石塚研究室、大学院生の松本先輩、同級生の小林さんには、プログラミングやGeant4の使い方を教えてい頂きました。
+私が初めてプログラミングを勉強し始めたときに松本さんにはC++言語の1から丁寧に教えていただきました。
+小林さんには、Geant4の参考資料や、プログラムの組み方等、様々なことを教えて頂きました。
+また、石塚研究室の先輩・同級生の皆様と楽しい時間を過ごすことができ、充実した生活を過ごすことができました。
+心より感謝申し上げます。
+
+最後に、生活面で支えてくれた家族に感謝を申し上げ謝辞とさせて頂きます。
+
+
+
+
+\begin{thebibliography}{9}
+\addcontentsline{toc}{chapter}{\bibname}
+\bibitem{Pauli} W. Pauli. Letter to L. Meitner and her colleagues (letter open to the participants of the conference in Tubingen)(1930)
+\bibitem{Reines} F.Reines, C.L. Cowan, Jr.,Nature 178,446-449 (1956)
+\bibitem{Syuron_2010} 横澤孝章, ''スーパーカミオカンデにおける検出器較正と超新星爆発ニュートリノバーストの探索'',東京大学大学院物理学専攻修士論文(2010)
+\bibitem{Syuron_2011}五十嵐春紀,''3次元飛程検出器DCBAによる二重ベータ崩壊核種$^{100}Mo$の半減期測定と検出器開発'',首都大学東京大学院学位論文(2011)
+\bibitem{hamamatsuHP}浜松ホトニクスHP,第10章高エネルギー粒子用Si検出器,"\url{https://www.hamamatsu.com/resources/pdf/ssd/10_handbook.pdf}''
+
+\bibitem{HDM}Latest Results from the Heidelberg-Moscow Double-Beta-Decay Experiment*(2001)
+\bibitem{MAJORANA}The MAJORANA Neutrinoless Double-beta Decay Experiment,"\url{https://www.npl.washington.edu/majorana/majorana-experiment}"
+\bibitem{GERDA}Searching Neutrinoless Double Beta Decay with Gerda Phase II(2017)
+\bibitem{NEMO}Searching for Neutrinoless Double Beta Decay,"\url{http://supernemo.org/}"
+\bibitem{CANDLES}CANDLES,"\url{http://www.rcnp.osaka-u.ac.jp/candles/index.html}"
+\bibitem{NEXT}J.J. Gomez-Cadenas,The NEXT experiment(2016)
+\bibitem{EXO}J. Cosmol. Astropart. Phys. 04, 029 ,Cosmogenic Backgrounds to 0νββ decay in EXO-200(2016)
+\bibitem{KamLAND-Zen-result}A.Gando er al.(KamLAND-Zen collaboration). Phys. Rev. Lett. 117, 082503 
+\bibitem{KamLAND-Zen}丸藤 祐仁,井上 邦雄,東北大学ニュートリノ科学研究センター,KamLAND-Zen 実験(2011)
+
+\bibitem{TUS_text}東京理科大学,物理学実験3テキスト,"半導体"
+\end{thebibliography}
+
+
+
+
+
+
+\end{document}
